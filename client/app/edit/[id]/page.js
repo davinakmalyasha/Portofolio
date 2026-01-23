@@ -51,17 +51,16 @@ export default function EditProject() {
   if(isLoading) return <p>Sedang mengambil data lama...</p>;
 
   return (
-    <div style={{ padding: '30px' }}>
+    <div>
         <h1>Edit Project (ID: {id})</h1>
         
-        <form onSubmit={handleUpdate} style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '400px' }}>
+        <form onSubmit={handleUpdate}>
             
             <label>Judul Project</label>
             <input 
                 type="text" 
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                style={{ padding: '10px' }}
             />
 
             <label>Deskripsi</label>
@@ -69,7 +68,6 @@ export default function EditProject() {
                 type="text" 
                 value={desc}
                 onChange={(e) => setDesc(e.target.value)}
-                style={{ padding: '10px' }}
             />
 
             <label>Tech Stack</label>
@@ -77,10 +75,9 @@ export default function EditProject() {
                 type="text" 
                 value={tech}
                 onChange={(e) => setTech(e.target.value)}
-                style={{ padding: '10px' }}
             />
 
-            <button type="submit" style={{ padding: '10px', background: 'orange', color: 'black', fontWeight: 'bold' }}>
+            <button type="submit">
                 Update Data
             </button>
 

@@ -1,49 +1,151 @@
 'use client'
 
-import { useEffect, useState } from "react"; 
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [projects, setProjects] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('http://localhost:5000/projects')
-       .then((res) => res.json())        
-       .then((data) => {
-         setProjects(data);             
-         setIsLoading(false);                
-       });
-  }, []);
+  const router = useRouter();
+    const [projects, setProjects] = useState([]);
+    const [isLoading, setisLoading] = useState(true);
 
 
-  return (
-    <div className="container" style={{ padding: '20px' }}>
+    const [showPopup, setShowPopup] = useState(false); 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+
+    useEffect(() => {
+        fetch('http://localhost:5000/projects')
+            .then((res) => res.json())
+            .then((data) => {
+                setProjects(data);
+                setisLoading(false);
+            });
+    }, []);
+
+
+    const handleLogin = async (e) => {
+      e.preventDefault();
+      try {
+          const res = await fetch('http://localhost:5000/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email, password })
+          });
+
+          const data = await res.json();
+          
+          if (res.ok) {
+            localStorage.setItem('token', data.token);
+              alert("Selamat datang, Admin!");
+              router.push('/dashboard'); 
+          } else {
+              alert("Password salah bos!");
+          }
+      } catch (error) {
+          console.error(error);
+          alert("Server error");
+      }
+  };
+
+
+   return (
+    <div className="container">
        
-       <h1 style={{ textAlign: 'center' }}>Portofolio Davin</h1>
-       <p style={{ textAlign: 'center', marginBottom: '30px' }}>
+       <h1>Portofolio Davin</h1>
+       <p>
          Selamat datang di galeri project saya.
        </p>
-
+       
        {}
-
        {isLoading ? <p>Loading...</p> : (
-           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+           <div>
                {projects.map((item) => (
-                   <div key={item.id} style={{ border: '1px solid #ddd', padding: '20px', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
+                   <div key={item.id}>
+                        
                         {}
-                        <h3 style={{ marginTop: 0 }}>{item.title}</h3>
-                        <p style={{ color: '#555' }}>{item.description}</p>
-                        <div style={{ marginTop: '10px' }}>
-                            <span style={{ background: '#eee', padding: '5px 10px', borderRadius: '5px', fontSize: '12px' }}>
-                                🛠 {item.tech_stack}
-                            </span>
-                        </div>
+                        {item.image ? (
+                           <div>
+            {item.image.split(',').map((imgName, index) => (
+                <img 
+                    key={index}
+                    src={`http://localhost:5000/images/${imgName.trim()}`} 
+                    alt={item.title} 
+                    className="card-image"
+                />
+            ))}
+        </div>
+                        ) : (
+                            <div>No Image</div>
+                        )}
 
+                        <h3>{item.title}</h3>
+                        <p></p>
+                        <span>
+                            🛠 {item.tech_stack}
+                        </span>
                         {}
+        <div>
+            {item.link_github && (
+                <a href={item.link_github} target="_blank">
+                    📂 GitHub
+                </a>
+            )}
+            {item.link_demo && (
+                <a href={item.link_demo} target="_blank">
+                    🚀 Demo
+                </a>
+            )}
+        </div>
+        {}
                    </div>
                ))}
            </div>
        )}
+
+       {}
+       
+       {}
+       {!showPopup && (
+           <button 
+                onClick={() => setShowPopup(true)}
+                title="Login Admin"
+           >
+            sini admin
+           </button>
+       )}
+
+       {}
+       {showPopup && (
+           <div>
+               <div>
+                   <h4>Admin</h4>
+                   <button onClick={() => setShowPopup(false)}>Tutup</button>
+               </div>
+
+               <form onSubmit={handleLogin}>
+                   <input 
+                        type="email" 
+                        placeholder="Email" 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                   />
+                   <input 
+                        type="password" 
+                        placeholder="Password" 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                   />
+                   <button type="submit">
+                       MASUK
+                   </button>
+               </form>
+           </div>
+       )}
+       {}
+
     </div>
   );
 }

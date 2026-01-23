@@ -1,84 +1,95 @@
 'use client'
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
 
 export default function TambahProject() {
-  const router = useRouter();
-  
-
-  const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
-  const [tech, setTech] = useState('');
+    const router = useRouter();
 
 
-  async function handleSubmit(e) {
-    e.preventDefault(); 
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+   const [techStack, setTechStack] = useState('');
+    const [image, setImage] = useState(null);
 
-   
-    const dataBaru = {
-        title: title,
-        description: desc,
-        tech_stack: tech
-    };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
- 
-    try {
-        const res = await fetch('http://localhost:5000/projects', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json' 
-            },
-            body: JSON.stringify(dataBaru)
-        });
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('tech_stack', techStack);
 
-        if(res.ok) {
-            alert("Sukses nambah data!");
-            router.push('/'); 
-        } else {
-            alert("Gagal kirim data");
+        if (image) {
+            formData.append('image', image);
         }
 
-    } catch (error) {
-        console.log(error);
-    }
-  }
+        try {
+            const response = await fetch('http://localhost:5000/projects', {
+                method: 'POST',
+                body: formData,
+            });
 
-  return (
-    <div style={{ padding: '30px' }}>
-        <h1>Tambah Project Baru</h1>
-        
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxWidth: '400px' }}>
-            
-            <input 
-                type="text" 
-                placeholder="Judul Project"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                style={{ padding: '10px' }}
-            />
+            if (response.ok) {
+                setTitle('');
+                setDescription('');
+                setTechStack('');
+                setImage(null);
 
-            <input 
-                type="text" 
-                placeholder="Deskripsi Singkat"
-                value={desc}
-                onChange={(e) => setDesc(e.target.value)}
-                style={{ padding: '10px' }}
-            />
+                alert("Project berhasil disimpan!");
+                window.location.reload();
+            } else {
+                alert("Gagal menyimpan project.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    };
 
-            <input 
-                type="text" 
-                placeholder="Tech Stack (misal: Next.js, MySQL)"
-                value={tech}
-                onChange={(e) => setTech(e.target.value)}
-                style={{ padding: '10px' }}
-            />
 
-            <button type="submit" style={{ padding: '10px', background: 'blue', color: 'white' }}>
-                Simpan
-            </button>
 
-        </form>
-    </div>
-  );
+    return (
+        <div>
+            <h1>Tambah Project Baru</h1>
+
+            <form onSubmit={handleSubmit}>
+                { }
+                <div>
+                    <label>Upload Gambar:</label>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setImage(e.target.files[0])}
+                    />
+                </div>
+                { }
+
+                <input
+                    type="text"
+                    placeholder="Judul Project"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+
+                <input
+                    type="text"
+                    placeholder="Deskripsi Singkat"
+                    value={description}
+                    onChange={(e) =>  setDescription(e.target.value)}
+                />
+
+                <input
+                    type="text"
+                    placeholder="Tech Stack (misal: Next.js, MySQL)"
+                    value={techStack}
+                    onChange={(e) => setTechStack(e.target.value)}
+                />
+
+                <button type="submit">
+                    Simpan
+                </button>
+
+            </form>
+        </div>
+    );
 }
