@@ -1,0 +1,212 @@
+body {
+background-color: white;
+color: #171717;
+margin: 0;
+padding: 0;
+display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.container {
+ width: 100%;
+ height: auto;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+}
+.homeContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+.heroSection {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}   
+.topBar {
+    margin-top: 1%;
+    width: 92%;
+    flex-shrink: 0;
+    border-radius: 50px;
+    padding: 23px 30px;
+    background-color: #171717;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;          
+}
+
+.kiriTopBar {
+    display: flex;
+    gap: 60px;
+}
+.logoNama {
+    display: flex;
+}
+.fotoTopBarNama {
+    width: 25px;
+    height: 25px;
+    
+}
+.kananTopBar {
+    display: flex;
+    gap: 60px;
+}
+.halo {
+    display: flex;
+    padding-left: 25px;
+}
+.halo h3 {
+    border: #171717 1px solid;
+    padding: 8px 25px;
+    border-radius: 40px;
+    font-weight: 600;
+}
+
+
+
+.fotoKumis {
+    width: 25px;
+    height: 25px;
+   
+    margin-bottom: 20px;
+}
+
+.perkenalanDiri {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    
+}
+
+.perkenalanDiri h1 {
+    font-size: 77px;
+    font-weight: 650;
+}
+.perkenalanDiri h1 span{
+    font-size: 80px;
+    font-weight: 650;
+    color: #FF2828;
+}
+
+
+
+.projectSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(253, 251, 251);
+}
+
+.projectAn {
+   display: flex;
+    flex-wrap: wrap;
+    width: 92%;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardProject {
+   width: 50%;
+   height: 250px;
+    box-sizing: border-box;
+    display: flex;  
+    margin-bottom: 5%;
+    justify-content: center;
+}
+
+.headerProject {
+  width: 100%;
+  margin-left: 13%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+.headerProject h4 {
+    font-size: 24px;
+    font-weight: 500;
+}
+.headerProject h2 {
+    font-size: 48px;
+    font-weight: 700;
+}
+.informasiProject {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.informasiProject .judul {
+    font-size: 36px;
+    font-weight: 600;
+}
+.informasiProject .tech {
+    font-size: 16px;
+    font-weight: 400;
+    
+}
+.informasiProject .desc {
+    font-size: 18px;
+    font-weight: 500;
+}
+.kiriProject{
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.informasiProject {
+    display: flex;
+    flex-direction: column;
+}
+.gambarGoToProject {
+    width: max-content;
+    padding: 16px;
+    background-color: #fd1d1d;
+    border-radius: 50%;
+}
+.panahProject {
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    
+}
+.bungkusKanan {
+    width: 45%;
+    overflow-x: scroll;
+    
+    scrollbar-width: none; 
+  -ms-overflow-style: none;
+}
+.bungkusKanan::-webkit-scrollbar {
+  display: none;
+}
+.kananProject {
+    display: flex;
+    gap: 30px;
+    height: 100%;
+}
+.fotoProject {
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
