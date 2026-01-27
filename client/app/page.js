@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import TargetCursor from "../components/TargetCursor";
 import "./css/index.css";
 import {
   motion,
@@ -10,10 +11,20 @@ import {
   AnimatePresence,
   useMotionValueEvent,
 } from "framer-motion";
+
+// --- DATA STATISTIK ---
+const STATS_DATA = {
+  exp: "03",
+  projects: "3",
+  rating: "300+", // Sudah diganti ke Commits biar lebih keren
+  certs: "12",
+};
+
+// --- KOMPONEN ABOUT ---
 const AboutStats = () => {
   return (
+    // ID "about" sudah ada di sini, jadi aman
     <div className="aboutSection" id="about">
-      {/* Badge Atas */}
       <motion.div
         className="aboutBadge"
         initial={{ opacity: 0, y: 20 }}
@@ -42,7 +53,7 @@ const AboutStats = () => {
               whileInView={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
-              03
+              {STATS_DATA.exp}
             </motion.h3>
             <p>Years of Experience</p>
           </div>
@@ -53,7 +64,7 @@ const AboutStats = () => {
               whileInView={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.4 }}
             >
-              20+
+              {STATS_DATA.projects}
             </motion.h3>
             <p>Total Projects</p>
           </div>
@@ -66,7 +77,7 @@ const AboutStats = () => {
             transition={{ duration: 0.5 }}
           >
             <img
-              src="/imgOrIcon/foto-davin.png"
+              src="/imgOrIcon/cartoon.jpeg"
               alt="Davin"
               className="portraitImg"
             />
@@ -85,15 +96,15 @@ const AboutStats = () => {
 
         <div className="statsColumn right">
           <div className="statItem">
-            <div className="stars">★★★★★</div>
+            {/* Bintang saya hapus karena diganti GitHub Commits biar lebih relate */}
             <motion.h3
               initial={{ scale: 0.5, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.5 }}
             >
-              5.00
+              {STATS_DATA.rating}
             </motion.h3>
-            <p>Client Rating</p>
+            <p>GitHub Commits</p>
           </div>
           <div className="statDivider"></div>
           <div className="statItem">
@@ -102,15 +113,17 @@ const AboutStats = () => {
               whileInView={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.6 }}
             >
-              02
+              {STATS_DATA.certs}
             </motion.h3>
-            <p>Awards Won</p>
+            <p>Certificate</p>
           </div>
         </div>
       </div>
     </div>
   );
 };
+
+// --- KOMPONEN PROJECT CARD ---
 const ProjectCard = ({ item }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
@@ -137,7 +150,7 @@ const ProjectCard = ({ item }) => {
 
   return (
     <div
-      className="cardProject"
+      className="cardProject cursor-target"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
     >
@@ -164,11 +177,21 @@ const ProjectCard = ({ item }) => {
           </div>
         </div>
         <div className="gambarGoToProject">
-          <img
-            className="panahProject"
-            src="/imgOrIcon/panah.png"
-            alt="arrow"
-          />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#ffffff"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="lucide lucide-arrow-up-right"
+          >
+            <path d="M7 7h10v10" />
+            <path d="M7 17 17 7" />
+          </svg>
         </div>
       </div>
 
@@ -194,7 +217,9 @@ const ProjectCard = ({ item }) => {
                   {images.map((_, idx) => (
                     <span
                       key={idx}
-                      className={`dot ${idx === currentImgIndex ? "active" : ""}`}
+                      className={`dot ${
+                        idx === currentImgIndex ? "active" : ""
+                      }`}
                     />
                   ))}
                 </div>
@@ -218,18 +243,20 @@ const ProjectCard = ({ item }) => {
   );
 };
 
+// --- MAIN COMPONENT ---
 export default function Home() {
   const router = useRouter();
   const [hidden, setHidden] = useState(false);
   const [projects, setProjects] = useState([]);
   const [isLoading, setisLoading] = useState(true);
 
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  useEffect(() => {
-    const handleMouseMove = (e) => setMousePos({ x: e.clientX, y: e.clientY });
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  // --- FUNGSI SCROLL SMOOTH ---
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const { scrollY } = useScroll();
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -255,12 +282,12 @@ export default function Home() {
   const radiusImage = useTransform(
     scrollYProgress,
     [0, 0.3, 0.8],
-    ["0px", "0px", "20px"],
+    ["0px", "0px", "20px"]
   );
   const marginImage = useTransform(
     scrollYProgress,
     [0, 0.3, 0.8],
-    ["0px", "0px", "0px"],
+    ["0px", "0px", "0px"]
   );
 
   useEffect(() => {
@@ -324,13 +351,16 @@ export default function Home() {
 
   return (
     <div className="container">
-      <motion.div
-        className="mouse-glow"
-        animate={{ x: mousePos.x - 150, y: mousePos.y - 150 }}
-        transition={{ type: "spring", damping: 30, stiffness: 200, mass: 0.5 }}
+      <TargetCursor
+        spinDuration={2}
+        hideDefaultCursor={true}
+        parallaxOn={true}
+        hoverDuration={0.2}
       />
 
       <div className="homeContainer">
+        
+        {/* --- TOP BAR NAVIGATION --- */}
         <motion.div
           className="topBar"
           variants={{ visible: { y: 0 }, hidden: { y: "-120%" } }}
@@ -338,35 +368,80 @@ export default function Home() {
           transition={{ duration: 0.35, ease: "easeInOut" }}
         >
           <ul className="kiriTopBar">
-            <li>Home</li>
-            <li>About</li>
-            <li>Experience</li>
+            <li className="cursor-target" onClick={() => scrollToSection("home")}>
+              Home
+            </li>
+            <li className="cursor-target" onClick={() => scrollToSection("about")}>
+              About
+            </li>
+            <li className="cursor-target" onClick={() => scrollToSection("experience")}>
+              Experience
+            </li>
           </ul>
+
           <div
-            className="logoNama"
+            className="logoNama cursor-target"
             onClick={() => setShowPopup(true)}
             style={{ cursor: "pointer" }}
           >
-            <img className="fotoTopBarNama" src="/imgOrIcon/kumis.png" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-lock"
+            >
+              <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
             <h2>Davin</h2>
           </div>
+
           <ul className="kananTopBar">
-            <li>Resume</li>
-            <li>Project</li>
-            <li>Contact</li>
+            <li
+              className="cursor-target"
+              onClick={() => window.open("/cv-davin.pdf", "_blank")}
+            >
+              Resume
+            </li>
+            <li className="cursor-target" onClick={() => scrollToSection("projects")}>
+              Project
+            </li>
+            <li className="cursor-target" onClick={() => scrollToSection("contact")}>
+              Contact
+            </li>
           </ul>
         </motion.div>
-        <div className="heroSection">
-          <motion.div className="floating-tag t1" style={{ y: y1 }}>
+
+        {/* --- HERO SECTION (ID: home) --- */}
+        <div className="heroSection" id="home">
+          <motion.div
+            className="floating-tag t1 cursor-target"
+            style={{ y: y1 }}
+          >
             React
           </motion.div>
-          <motion.div className="floating-tag t2" style={{ y: y2 }}>
+          <motion.div
+            className="floating-tag t2 cursor-target"
+            style={{ y: y2 }}
+          >
             Laravel
           </motion.div>
-          <motion.div className="floating-tag t3" style={{ y: y3 }}>
-            Node.js
+          <motion.div
+            className="floating-tag t3 cursor-target"
+            style={{ y: y3 }}
+          >
+            MySQL
           </motion.div>
-          <motion.div className="floating-tag t4" style={{ y: y4 }}>
+          <motion.div
+            className="floating-tag t4 cursor-target"
+            style={{ y: y4 }}
+          >
             Express.js
           </motion.div>
           <div className="halo">
@@ -374,12 +449,13 @@ export default function Home() {
             <img className="fotoKumis" src="/imgOrIcon/kumis.png" alt="" />
           </div>
           <div className="perkenalanDiri">
-            <h1>
+            <h1 className="cursor-target">
               Im <span className="spanNama">Davin</span>,
             </h1>
-            <h1>FullStack Developer</h1>
+            <h1 className="cursor-target">FullStack Developer</h1>
           </div>
         </div>
+
         <div className="interactionGuide">
           <motion.div
             className="mouseIcon"
@@ -405,7 +481,8 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="projectSection">
+      {/* --- PROJECT SECTION (ID: projects) --- */}
+      <div className="projectSection" id="projects">
         <div className="headerProject">
           <h4>Project</h4>
           <h2>Recent Project</h2>
@@ -456,7 +533,8 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="bentoSection">
+      {/* --- EXPERIENCE / BENTO SECTION (ID: experience) --- */}
+      <div className="bentoSection" id="experience">
         <div className="bentoHeader">
           <h2>My Arsenal</h2>
           <p>The tools I use to conquer the web.</p>
@@ -472,7 +550,7 @@ export default function Home() {
               whileHover={{ scale: 1.02 }}
             >
               <div
-                className="bentoContent"
+                className="bentoContent cursor-target"
                 style={{
                   background: `linear-gradient(135deg, white 50%, ${item.color} 100%)`,
                 }}
@@ -492,9 +570,11 @@ export default function Home() {
         </div>
       </div>
 
+      {/* About Stats Component (ID: about) is handled inside */}
       <AboutStats />
 
-      <div className="contactSection">
+      {/* --- CONTACT SECTION (ID: contact) --- */}
+      <div className="contactSection" id="contact">
         <div className="ctaCard">
           <div className="ctaText">
             <h2>Start a project</h2>
@@ -502,7 +582,19 @@ export default function Home() {
               Interested in working together? We should queue up a time to chat.
             </p>
           </div>
-          <button className="ctaButton" onClick={() => alert("Redirect ke WA")}>
+          <button
+            className="ctaButton cursor-target"
+            onClick={() => {
+              const phoneNumber = "62895324350359";
+              const message = encodeURIComponent(
+                "Halo Davin, saya melihat portfolio Anda dan tertarik untuk berdiskusi lebih lanjut."
+              );
+              window.open(
+                `https://wa.me/${phoneNumber}?text=${message}`,
+                "_blank"
+              );
+            }}
+          >
             Lets do this
           </button>
         </div>
@@ -511,10 +603,10 @@ export default function Home() {
             <h3>Living, learning, & leveling up one day at a time.</h3>
           </div>
           <div className="socialIcons">
-            <div className="iconBulat">IG</div>
-            <div className="iconBulat">LI</div>
-            <div className="iconBulat">GH</div>
-            <div className="iconBulat">EM</div>
+            <div className="iconBulat cursor-target">IG</div>
+            <div className="iconBulat cursor-target">LI</div>
+            <div className="iconBulat cursor-target">GH</div>
+            <div className="iconBulat cursor-target">EM</div>
           </div>
           <p className="copyright">Handcrafted by me © Davin Akmal</p>
         </div>

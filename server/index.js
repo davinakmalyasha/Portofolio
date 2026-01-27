@@ -162,6 +162,14 @@ app.post('/login', (req, res) => {
     });
 });
 
+app.get('/about-stats', (req, res) => {
+  const sql = "SELECT * FROM about_stats WHERE id = 1";
+  
+  db.query(sql, (err, result) => {
+    if (err) return res.status(500).json(err);
+    res.json(result[0]); 
+  });
+});
 app.listen(PORT, () => {
     console.log('Server jalan di port http://localhost:${PORT}');
 });

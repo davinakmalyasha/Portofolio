@@ -10,17 +10,6 @@ display: flex;
   box-sizing: border-box;
   overflow-x: hidden;
 }
-.mouse-glow {
-  position: fixed; 
-  top: 0;
-  left: 0;
-  width: 120px;
-  height: 120px;
-  border: 1px solid #fd1d1d;
-  border-radius: 50%;
-  pointer-events: none; 
-  z-index: 99999; 
-}
 .heroSection, .topBar, .projectSection {
   position: relative;
   z-index: 11; 
@@ -292,9 +281,11 @@ display: flex;
 .gambarGoToProject {
     width: max-content;
     padding: 16px;
-    background-color: #fd1d1d;
+    background-color: black;
     border-radius: 50%;
+     transition: 0.3s ease;
 }
+
 .panahProject {
     width: 30px;
     height: 30px;
@@ -890,3 +881,13 @@ display: flex;
     margin-bottom: 40px;
   }
 }
+
+
+
+
+
+
+
+
+
+
