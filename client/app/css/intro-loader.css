@@ -1,0 +1,58 @@
+.intro-loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0e0e0e; /* Loader is pitch black to establish contrast! */
+  color: #ffffff;
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.intro-loader-content {
+  width: 90%;
+  max-width: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.intro-language {
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 4px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  font-family: var(--font-heading);
+}
+
+.intro-counter-wrapper {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 15px;
+}
+
+.intro-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background-color: #ffffff;
+  transition: width 0.05s ease-out;
+}
+
+.intro-percentage {
+  font-size: 0.95rem;
+  font-weight: 500;
+  opacity: 0.6;
+  letter-spacing: 1px;
+}

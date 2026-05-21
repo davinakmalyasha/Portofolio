@@ -1,0 +1,91 @@
+:root {
+  --background: #fcfcfc;
+  --foreground: #0e0e0e;
+  --card-bg: rgba(255, 255, 255, 0.75);
+  --border-color: rgba(0, 0, 0, 0.15);
+  --text-muted: #666666;
+  --accent-color: #0e0e0e;
+  --font-heading: var(--font-syne), sans-serif;
+  --font-body: var(--font-outfit), sans-serif;
+}
+
+/* Force light mode variables as the default even if OS is dark */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #fcfcfc;
+    --foreground: #0e0e0e;
+    --card-bg: rgba(255, 255, 255, 0.75);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --text-muted: #666666;
+    --accent-color: #0e0e0e;
+  }
+}
+
+html.dark {
+  --background: #080808;
+  --foreground: #fafafa;
+  --card-bg: rgba(20, 20, 20, 0.65);
+  --border-color: rgba(255, 255, 255, 0.15);
+  --text-muted: #8c8c8c;
+  --accent-color: #fafafa;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  position: relative;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* Animating Film Grain Layer */
+.noise-grain {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: transparent url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E') repeat;
+  opacity: 0.035;
+  pointer-events: none;
+  z-index: 9999;
+  animation: noiseShift 0.25s steps(4) infinite;
+}
+
+html.dark .noise-grain {
+  opacity: 0.045;
+}
+
+@keyframes noiseShift {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-10px, 5px); }
+  50% { transform: translate(5px, -10px); }
+  75% { transform: translate(-5px, 10px); }
+  100% { transform: translate(10px, -5px); }
+}
+
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}

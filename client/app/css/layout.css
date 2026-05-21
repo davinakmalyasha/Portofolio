@@ -1,0 +1,521 @@
+.canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+
+
+.vertical-scroll-height {
+  height: 600vh;
+  pointer-events: none;
+}
+
+.slide-section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 100px 6% 60px 6%;
+  overflow: visible;
+  perspective: 1200px;
+  box-sizing: border-box;
+}
+
+.slide-inner-3d {
+  width: 100%;
+  height: 100%;
+  padding: 60px 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: 24px;
+  box-sizing: border-box;
+
+  /* Premium Glassmorphic Card Styling */
+  background-color: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.02);
+
+  /* Mouse Hover Tilt */
+  transform-style: preserve-3d;
+  transform: 
+    rotateY(calc(var(--mouse-x, 0) * 8deg))
+    rotateX(calc(var(--mouse-y, 0) * 8deg));
+
+  will-change: transform;
+  pointer-events: auto;
+}
+
+/* Glass Glare Sheen Reflection Overlay */
+.slide-inner-3d::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    800px circle at calc(50% + var(--mouse-x, 0) * 50%) calc(50% - var(--mouse-y, 0) * 50%),
+    rgba(255, 255, 255, 0.08),
+    transparent 60%
+  );
+  z-index: 10;
+  mix-blend-mode: overlay;
+  transition: opacity 0.5s ease;
+  opacity: 0;
+}
+
+.slide-inner-3d:hover::after {
+  opacity: 1;
+}
+
+html.dark .slide-inner-3d::after {
+  background: radial-gradient(
+    800px circle at calc(50% + var(--mouse-x, 0) * 50%) calc(50% - var(--mouse-y, 0) * 50%),
+    rgba(255, 255, 255, 0.12),
+    transparent 60%
+  );
+}
+
+.topBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 30px 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  pointer-events: auto;
+}
+
+.logoNama h2 {
+  font-size: 1.25rem;
+  letter-spacing: 2px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.navMenu {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+
+.navMenu li {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.3s;
+}
+
+.navMenu li:hover,
+.navMenu li.active {
+  opacity: 1;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+/* Custom visual layout grid lines for Awwwards style */
+.bg-grid-lines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.grid-line {
+  width: 1px;
+  height: 100%;
+  background-color: var(--border-color);
+  opacity: 0.5;
+}
+
+.loading-locked {
+  overflow: hidden !important;
+  height: 100vh !important;
+  pointer-events: none !important;
+}
+.loading-locked .canvas-container,
+.loading-locked .topBar,
+.loading-locked .theme-toggle-btn {
+  opacity: 0 !important;
+}
+
+/* 3D Capsule Pod Morphing & Glass Door Swing Interactions */
+.capsule-pod {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+  transition: 
+    width 0.85s cubic-bezier(0.25, 1, 0.3, 1), 
+    height 0.85s cubic-bezier(0.25, 1, 0.3, 1), 
+    border-radius 0.85s cubic-bezier(0.25, 1, 0.3, 1);
+  will-change: width, height, border-radius;
+  box-sizing: border-box;
+}
+
+.capsule-closed {
+  width: 170px;
+  height: 270px;
+  border-radius: 8px; /* sharp micro-chamfer aspect ratio matches WebGL backing */
+  background-color: transparent !important; /* Made transparent to show WebGL cylinder slice */
+  border: none !important;
+  box-shadow: none !important;
+}
+
+html.dark .capsule-closed {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.capsule-opened {
+  width: 1040px;
+  height: 600px;
+  border-radius: 8px; /* sharp micro-chamfer */
+  background-color: transparent !important; /* Made transparent to show WebGL cylinder slice */
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* High-tech HUD Telemetry Corner Brackets */
+.tech-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2.2px solid #0e0e0e;
+  z-index: 8;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.tech-top-left {
+  top: 12px;
+  left: 12px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.tech-top-right {
+  top: 12px;
+  right: 12px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.tech-bottom-left {
+  bottom: 12px;
+  left: 12px;
+  border-right: none;
+  border-top: none;
+}
+
+.tech-bottom-right {
+  bottom: 12px;
+  right: 12px;
+  border-left: none;
+  border-top: none;
+}
+
+/* Minimalist Vertical Section Title for Closed Pod */
+.capsule-label {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 12px;
+  text-transform: uppercase;
+  color: #000000;
+  opacity: 0.9;
+  text-shadow: 0 4px 15px rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  transform: translateZ(28px); /* Elevate title block above WebGL capsule */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  user-select: none;
+}
+
+html.dark .capsule-label {
+  color: #ffffff;
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+}
+
+.capsule-opened .capsule-label {
+  opacity: 0;
+  transform: translateZ(28px) scale(0.6) translateY(20px);
+}
+
+/* 3D Capsule Pod Swinging Glass Doors (Made fully transparent to let WebGL handle rendering) */
+.capsule-door-left,
+.capsule-door-right {
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  width: 50.5%;
+  z-index: 5;
+  background: transparent;
+  border: none;
+  transition: transform 0.85s cubic-bezier(0.25, 1, 0.3, 1), opacity 0.85s;
+  pointer-events: none;
+}
+
+.capsule-door-left {
+  left: -1px;
+  border-radius: inherit;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  transform-origin: left center;
+}
+
+.capsule-door-right {
+  right: -1px;
+  border-radius: inherit;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  transform-origin: right center;
+}
+
+.capsule-opened .capsule-door-left {
+  transform: rotateY(-130deg);
+  opacity: 0;
+}
+
+.capsule-opened .capsule-door-right {
+  transform: rotateY(130deg);
+  opacity: 0;
+}
+
+/* Detailed content emerging slide-out mechanics */
+.capsule-content-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 40px 5%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  transform-style: preserve-3d;
+  transition: transform 0.85s cubic-bezier(0.25, 1, 0.3, 1), opacity 0.6s ease;
+  pointer-events: none;
+}
+
+.capsule-closed .capsule-content-card {
+  opacity: 0;
+  transform: translateZ(-60px) scale(0.85);
+}
+
+.capsule-opened .capsule-content-card {
+  opacity: 1;
+  transform: translateZ(35px) scale(1); /* Float content in front of WebGL glass backing */
+  pointer-events: auto;
+}
+
+/* Ensure theme-aware text and border contrast inside the active capsule pod */
+.capsule-opened,
+.capsule-opened .capsule-content-card,
+.capsule-opened h2,
+.capsule-opened h3,
+.capsule-opened h4,
+.capsule-opened p,
+.capsule-opened span,
+.capsule-opened a,
+.capsule-opened label,
+.capsule-opened .tech-badge,
+.capsule-opened .timeline-role,
+.capsule-opened .timeline-company,
+.capsule-opened .timeline-period,
+.capsule-opened .service-number,
+.capsule-opened .service-desc,
+.capsule-opened .service-deliverables li,
+.capsule-opened .work-number,
+.capsule-opened .work-year,
+.capsule-opened .work-category,
+.capsule-opened .work-details,
+.capsule-opened .work-explore-link,
+.capsule-opened .contact-mail-link,
+.capsule-opened .social-link,
+.capsule-opened .form-field label,
+.capsule-opened .about-subtitle,
+.capsule-opened .contact-subtitle {
+  color: var(--foreground) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Force cards and inputs inside the capsule to look pristine by matching active theme colors */
+.capsule-opened .work-slide-card,
+.capsule-opened .contact-input,
+.capsule-opened .contact-textarea {
+  background-color: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+  color: var(--foreground) !important;
+}
+
+.capsule-opened .work-card-visual {
+  border-color: var(--border-color) !important;
+  opacity: 0.15 !important;
+}
+
+.capsule-opened .service-card {
+  border-top-color: var(--foreground) !important;
+}
+
+.capsule-opened .service-bullet-spin {
+  background-color: var(--foreground) !important;
+}
+
+.capsule-opened .tech-badge {
+  background-color: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-muted) !important;
+}
+
+.capsule-opened .contact-submit {
+  background-color: var(--foreground) !important;
+  color: var(--background) !important;
+}
+
+.capsule-opened .contact-input:focus,
+.capsule-opened .contact-textarea:focus {
+  border-color: var(--foreground) !important;
+}
+
+.capsule-opened .fontOutline {
+  -webkit-text-stroke: 1.5px var(--foreground) !important;
+  color: transparent !important;
+}
+
+/* Dynamic Drei HTML Portal Pointer Events classes to prevent click interception */
+.active-portal {
+  pointer-events: auto !important;
+}
+.inactive-portal {
+  pointer-events: none !important;
+}
+
+/* Enable pointer-events on all parent wrapper elements created dynamically by react-three-drei portal */
+.canvas-container div:has(.active-portal) {
+  pointer-events: auto !important;
+}
+
+/* Premium 2D Fallback Design System */
+.fallback-2d-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.fallback-slide-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.fallback-2d .slide-section {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fallback-2d .capsule-opened {
+  width: 1040px;
+  height: 600px;
+  max-width: 90vw;
+  max-height: 80vh;
+  border-radius: 12px;
+  background-color: var(--card-bg) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.05) !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  pointer-events: auto !important;
+  transition: all 0.5s cubic-bezier(0.25, 1, 0.3, 1);
+}
+
+html.dark .fallback-2d .capsule-opened {
+  background-color: rgba(14, 14, 14, 0.5) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4) !important;
+}
+
+.fallback-2d .capsule-content-card {
+  opacity: 1 !important;
+  transform: none !important;
+  pointer-events: auto !important;
+  width: 100%;
+  height: 100%;
+}
+
+/* Ensure nice inner-scroll for cards on mobile/tablet fallback mode */
+@media (max-width: 768px) {
+  .fallback-2d .capsule-opened {
+    width: 95vw !important;
+    height: 85vh !important;
+    max-height: 85vh !important;
+  }
+}
+
