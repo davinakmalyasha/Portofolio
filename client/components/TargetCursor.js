@@ -91,8 +91,29 @@ const TargetCursor = ({
     createSpinTimeline();
 
     const tickerFn = () => {
-      if (!targetCornerPositionsRef.current || !cursorRef.current || !cornersRef.current) {
+      if (!activeTarget || !cursorRef.current || !cornersRef.current) {
         return;
+      }
+
+      // Dynamically recalculate bounding box of activeTarget to track 3D rotations, transitions, and scaling!
+      const rect = activeTarget.getBoundingClientRect();
+      const { borderWidth, cornerSize } = constants;
+      
+      if (rect.width < 5 || rect.height < 5) {
+        // Fallback if 3D transforms collapse the bounding box
+        targetCornerPositionsRef.current = [
+          { x: -cornerSize * 1.5, y: -cornerSize * 1.5 },
+          { x: cornerSize * 0.5, y: -cornerSize * 1.5 },
+          { x: cornerSize * 0.5, y: cornerSize * 0.5 },
+          { x: -cornerSize * 1.5, y: cornerSize * 0.5 }
+        ];
+      } else {
+        targetCornerPositionsRef.current = [
+          { x: rect.left - borderWidth, y: rect.top - borderWidth },
+          { x: rect.right + borderWidth - cornerSize, y: rect.top - borderWidth },
+          { x: rect.right + borderWidth - cornerSize, y: rect.bottom + borderWidth - cornerSize },
+          { x: rect.left - borderWidth, y: rect.bottom + borderWidth - cornerSize }
+        ];
       }
 
       const strength = activeStrengthRef.current;
@@ -129,8 +150,13 @@ const TargetCursor = ({
     const moveHandler = e => moveCursor(e.clientX, e.clientY);
     window.addEventListener('mousemove', moveHandler);
 
+    let lastScrollCheck = 0;
     const scrollHandler = () => {
       if (!activeTarget || !cursorRef.current) return;
+      const now = performance.now();
+      if (now - lastScrollCheck < 60) return; // limit layout checks to max 16.6 FPS on scroll
+      lastScrollCheck = now;
+      
       const mouseX = gsap.getProperty(cursorRef.current, 'x');
       const mouseY = gsap.getProperty(cursorRef.current, 'y');
       const elementUnderMouse = document.elementFromPoint(mouseX, mouseY);
@@ -194,12 +220,22 @@ const TargetCursor = ({
       const cursorX = gsap.getProperty(cursorRef.current, 'x');
       const cursorY = gsap.getProperty(cursorRef.current, 'y');
 
-      targetCornerPositionsRef.current = [
-        { x: rect.left - borderWidth, y: rect.top - borderWidth },
-        { x: rect.right + borderWidth - cornerSize, y: rect.top - borderWidth },
-        { x: rect.right + borderWidth - cornerSize, y: rect.bottom + borderWidth - cornerSize },
-        { x: rect.left - borderWidth, y: rect.bottom + borderWidth - cornerSize }
-      ];
+      if (rect.width < 5 || rect.height < 5) {
+        // Fallback for 3D collapsed bounding boxes
+        targetCornerPositionsRef.current = [
+          { x: -cornerSize * 1.5, y: -cornerSize * 1.5 },
+          { x: cornerSize * 0.5, y: -cornerSize * 1.5 },
+          { x: cornerSize * 0.5, y: cornerSize * 0.5 },
+          { x: -cornerSize * 1.5, y: cornerSize * 0.5 }
+        ];
+      } else {
+        targetCornerPositionsRef.current = [
+          { x: rect.left - borderWidth, y: rect.top - borderWidth },
+          { x: rect.right + borderWidth - cornerSize, y: rect.top - borderWidth },
+          { x: rect.right + borderWidth - cornerSize, y: rect.bottom + borderWidth - cornerSize },
+          { x: rect.left - borderWidth, y: rect.bottom + borderWidth - cornerSize }
+        ];
+      }
 
       isActiveRef.current = true;
       gsap.ticker.add(tickerFnRef.current);
