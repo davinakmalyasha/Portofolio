@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+  experimental: {
+    optimizePackageImports: ['three', 'framer-motion', '@react-three/fiber', '@react-three/drei'],
+  },
 };
 
 export default nextConfig;
