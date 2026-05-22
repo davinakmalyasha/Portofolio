@@ -169,9 +169,15 @@ html.dark .slide-inner-3d::after {
   height: 100vh !important;
   pointer-events: none !important;
 }
-.loading-locked .canvas-container,
-.loading-locked .topBar,
-.loading-locked .theme-toggle-btn {
+.visuals-hidden .canvas-container {
+  /* Use clip-path instead of opacity:0 — forces GPU to rasterize WebGL buffers
+     (particles, lines, textures) while keeping them invisible to the user.
+     opacity:0 lets some GPU drivers skip rasterization entirely. */
+  clip-path: inset(0 0 100% 0) !important;
+  pointer-events: none !important;
+}
+.visuals-hidden .topBar,
+.visuals-hidden .theme-toggle-btn {
   opacity: 0 !important;
 }
 
@@ -188,6 +194,9 @@ html.dark .slide-inner-3d::after {
     border-radius 0.85s cubic-bezier(0.25, 1, 0.3, 1);
   will-change: width, height, border-radius;
   box-sizing: border-box;
+  /* Isolate layout reflow: prevents capsule resize from triggering
+     expensive recalculations on parent and sibling elements */
+  contain: layout style;
 }
 
 .capsule-closed {
@@ -342,10 +351,18 @@ html.dark .capsule-label {
   transform-style: preserve-3d;
   transition: transform 0.85s cubic-bezier(0.25, 1, 0.3, 1), opacity 0.6s ease;
   pointer-events: none;
+  /* Promote to own GPU compositor layer so the browser pre-rasterizes
+     all content (text, images, badges) even while hidden. Eliminates
+     the first-open paint storm that causes freeze/jitter. */
+  will-change: transform, opacity;
 }
 
 .capsule-closed .capsule-content-card {
-  opacity: 0;
+  /* Use near-zero opacity instead of 0 to force the browser to rasterize
+     all child content into the GPU layer. At opacity: 0 browsers can skip
+     painting entirely, causing a freeze when content first becomes visible.
+     0.01 is imperceptible to the human eye. */
+  opacity: 0.01;
   transform: translateZ(-60px) scale(0.85);
 }
 
@@ -397,7 +414,7 @@ html.dark .capsule-label {
 
 .capsule-opened .work-card-visual {
   border-color: var(--border-color) !important;
-  opacity: 0.15 !important;
+  opacity: 0.85 !important;
 }
 
 .capsule-opened .service-card {
@@ -514,8 +531,85 @@ html.dark .fallback-2d .capsule-opened {
 @media (max-width: 768px) {
   .fallback-2d .capsule-opened {
     width: 95vw !important;
-    height: 85vh !important;
-    max-height: 85vh !important;
+    height: 80vh !important;
+    max-height: 80vh !important;
+  }
+  .fallback-2d .capsule-content-card {
+    overflow-y: auto !important;
+    justify-content: flex-start !important;
+    padding: 60px 15px 30px 15px !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .topBar {
+    padding: 15px 4% !important;
+  }
+  .topBar div:first-child {
+    display: none !important;
+  }
+  .nav-container {
+    width: 100% !important;
+    justify-content: space-between !important;
+    gap: 15px !important;
+  }
+  .navMenu {
+    gap: 12px !important;
+    overflow-x: auto !important;
+    max-width: calc(100vw - 110px) !important;
+    padding-bottom: 4px !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .navMenu li {
+    font-size: 0.72rem !important;
+    letter-spacing: 1px !important;
+    white-space: nowrap !important;
   }
 }
+
+/* Mobile Scroll Control Navigation Buttons */
+.mobile-scroll-indicator-control {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  gap: 15px;
+  background-color: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+html.dark .mobile-scroll-indicator-control {
+  background-color: rgba(14, 14, 14, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.mobile-scroll-indicator-btn {
+  background: none;
+  border: none;
+  color: var(--foreground);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-scroll-indicator-btn:active {
+  transform: scale(0.85);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-scroll-indicator-btn:disabled {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
 

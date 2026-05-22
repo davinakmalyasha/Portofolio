@@ -34,6 +34,55 @@ html.dark {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+/* Scoped theme transition: only elements that actually change bg/border on theme toggle.
+   Reduces browser transition tracking from ~1000+ elements to ~40. */
+body,
+.slide-inner-3d,
+.grid-line,
+.capsule-pod,
+.capsule-content-card,
+.tech-corner,
+.tech-badge,
+.work-slide-card,
+.work-card-visual,
+.service-card,
+.service-bullet-spin,
+.contact-input,
+.contact-textarea,
+.contact-submit,
+.contact-mail-link,
+.social-link,
+.theme-toggle-btn,
+.topBar,
+.navMenu li,
+.fontOutline,
+.scroll-indicator-bar,
+.scroll-indicator-dot,
+.timeline-card,
+.timeline-tech-badge,
+.timeline-explore-btn,
+.about-photo-frame,
+.about-stat-card,
+.about-stat-bar-fill,
+.about-skill-tag,
+.about-tool-card,
+.about-interest-card,
+.about-timeline-dot,
+.about-timeline-connector,
+.project-modal-overlay,
+.project-modal-content,
+.project-modal-close,
+.project-modal-nav-btn,
+.project-modal-chip,
+.project-modal-section-title,
+.experience-modal-content,
+.experience-modal-close,
+.experience-modal-chip,
+.experience-modal-nav-btn,
+.experience-modal-section-title,
+.fallback-2d .capsule-opened {
   transition: background-color 0.4s ease, border-color 0.4s ease;
 }
 
@@ -51,20 +100,21 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Animating Film Grain Layer */
 .noise-grain {
+  display: none;
+}
+
+html.dark .noise-grain {
+  display: block;
   position: fixed;
   top: -50%;
   left: -50%;
   width: 200%;
   height: 200%;
   background: transparent url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E') repeat;
-  opacity: 0.035;
+  opacity: 0.045;
   pointer-events: none;
   z-index: 9999;
   animation: noiseShift 0.25s steps(4) infinite;
-}
-
-html.dark .noise-grain {
-  opacity: 0.045;
 }
 
 @keyframes noiseShift {

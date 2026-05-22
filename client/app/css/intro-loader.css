@@ -47,7 +47,7 @@
   left: 0;
   height: 2px;
   background-color: #ffffff;
-  transition: width 0.05s ease-out;
+  transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .intro-percentage {
@@ -56,3 +56,11 @@
   opacity: 0.6;
   letter-spacing: 1px;
 }
+
+@media (max-width: 768px) {
+  .intro-language {
+    font-size: 1.8rem !important;
+    letter-spacing: 2px !important;
+  }
+}
+

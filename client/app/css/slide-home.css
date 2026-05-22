@@ -125,3 +125,41 @@
   background-color: var(--foreground);
   position: absolute;
 }
+
+@media (max-width: 768px) {
+  .section-title-wrap {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    margin-bottom: 25px !important;
+    align-self: flex-start !important;
+    width: 100% !important;
+  }
+  .home-titles h1 {
+    font-size: 2.2rem !important;
+    letter-spacing: -1px !important;
+  }
+  .home-tagline {
+    font-size: 0.7rem !important;
+    letter-spacing: 2px !important;
+    margin-bottom: 15px !important;
+  }
+  .home-description {
+    font-size: 0.85rem !important;
+    margin-top: 20px !important;
+    padding: 0 10px !important;
+  }
+  .home-ticker {
+    bottom: 80px !important;
+  }
+  .ticker-track {
+    font-size: 2.0rem !important;
+  }
+  .scroll-indicator-horizontal {
+    bottom: 30px !important;
+  }
+  .home-coordinates {
+    display: none !important;
+  }
+}
+

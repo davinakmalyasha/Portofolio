@@ -387,11 +387,11 @@ html.dark .pm-challenge-card {
 }
 
 .challenge-icon {
-  color: #ff9100;
+  color: var(--foreground);
 }
 
 .solution-icon {
-  color: #00e5ff;
+  color: var(--text-muted);
 }
 
 .pm-challenge-card h4 {

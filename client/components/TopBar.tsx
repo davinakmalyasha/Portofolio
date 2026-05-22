@@ -15,7 +15,7 @@ const MENU_ITEMS = [
   { label: "ABOUT", index: 1 },
   { label: "WORKS", index: 2 },
   { label: "EXPERIENCE", index: 3 },
-  { label: "SERVICES", index: 4 },
+  { label: "GITHUB", index: 4 },
   { label: "CONTACT", index: 5 }
 ];
 
@@ -37,6 +37,14 @@ export default function TopBar({ onNavClick, activeSlide, ready }: TopBarProps):
                 key={item.index}
                 className={`cursor-target ${activeSlide === item.index ? "active" : ""}`}
                 onClick={() => onNavClick(item.index)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    onNavClick(item.index);
+                  }
+                }}
+                tabIndex={0}
+                role="button"
               >
                 {item.label}
               </li>

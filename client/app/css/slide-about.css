@@ -32,12 +32,10 @@
   object-fit: cover;
   object-position: 100% 85%;
   transform: scale(1.15);
-  filter: grayscale(1) contrast(1.15) brightness(0.95);
-  transition: filter 0.4s ease, transform 0.4s ease;
+  transition: transform 0.4s ease;
 }
 
 .profile-photo-container:hover .profile-photo {
-  filter: grayscale(0) contrast(1.1) brightness(1);
   transform: scale(1.20);
 }
 
@@ -115,6 +113,26 @@
   gap: 5px;
   color: var(--foreground);
   letter-spacing: 0.3px;
+}
+
+.university-logo {
+  height: 36px;
+  width: auto;
+  max-width: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.university-name {
+  font-size: 0.62rem;
+  line-height: 1.2;
+}
+
+.gpa-scale {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-left: 1px;
 }
 
 .status-dot {
@@ -642,3 +660,42 @@
   border-radius: 3px;
   transition: width 1.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
+
+@media (max-width: 768px) {
+  .about-slide-layout {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .profile-column {
+    align-items: center !important;
+    width: 100% !important;
+  }
+  .profile-photo-container {
+    width: 180px !important;
+    height: 180px !important;
+  }
+  .profile-details-grid {
+    width: 100% !important;
+  }
+  .profile-mindset-row {
+    width: 100% !important;
+  }
+  .focus-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .about-title {
+    font-size: 1.5rem !important;
+  }
+  .about-subtitle-text {
+    font-size: 0.9rem !important;
+  }
+  .section-title-wrap {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    margin-bottom: 25px !important;
+    align-self: flex-start !important;
+    width: 100% !important;
+  }
+}
+

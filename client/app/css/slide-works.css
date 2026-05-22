@@ -49,7 +49,7 @@
   flex-direction: column;
   justify-content: space-between;
   border-radius: 12px;
-  backdrop-filter: blur(10px);
+  /* backdrop-filter removed: cards have opaque bg, blur was invisible but GPU-expensive */
   transform: translateZ(40px);
   transform-style: preserve-3d;
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s;
@@ -211,3 +211,84 @@
   color: var(--background) !important;
   border-color: var(--foreground) !important;
 }
+
+/* Project card status badge styling */
+.work-status-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: var(--font-body);
+  transition: color 0.4s ease;
+}
+
+.work-status-badge.status-development {
+  color: #c25e00; /* Rich orange/amber for high contrast on light bg */
+}
+
+html.dark .work-status-badge.status-development {
+  color: #ffa726; /* Glowing orange/amber for dark mode */
+}
+
+.work-status-badge.status-deployed {
+  color: #0b8a8f; /* Sleek deep cyan/teal for light mode */
+}
+
+html.dark .work-status-badge.status-deployed {
+  color: #00e5ff; /* Vibrant electric cyan for dark mode */
+}
+
+.work-year {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .works-scroll-btn {
+    display: none !important;
+  }
+  .works-scroll-container {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    height: auto !important;
+    padding: 10px 0 !important;
+    -webkit-overflow-scrolling: touch !important;
+    pointer-events: auto !important;
+  }
+  .works-cards-wrapper {
+    transform: none !important;
+    gap: 15px !important;
+    padding: 10px !important;
+  }
+  .work-slide-card {
+    width: 270px !important;
+    height: 360px !important;
+    padding: 15px !important;
+    transform: none !important;
+  }
+  .work-slide-card:hover {
+    transform: none !important;
+  }
+  .work-card-visual {
+    height: 110px !important;
+    margin: 5px 0 !important;
+  }
+  .work-card-body h3 {
+    font-size: 1.1rem !important;
+  }
+  .work-details {
+    font-size: 0.75rem !important;
+    margin-bottom: 5px !important;
+  }
+  .section-title-wrap {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    margin-bottom: 25px !important;
+    align-self: flex-start !important;
+    width: 100% !important;
+  }
+}
+
