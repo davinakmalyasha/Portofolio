@@ -1,16 +1,32 @@
 "use client";
 
-import React, { useRef, useMemo, useEffect, useState } from "react";
+import React, { useRef, useMemo, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
+import { Vector3, Points, BufferAttribute, NormalBlending } from "three";
 import { POD_COORDINATES } from "./SceneController";
+import { scrollProgress } from "../hooks/scrollProgress";
+import { useThemeObserver } from "../hooks/useThemeObserver";
+
+// Module-level cached Vector3 to avoid per-frame GC allocation
+const _waveFocus = new Vector3();
 
 export default function ParticleWave(): React.JSX.Element {
-  const pointsRef = useRef<THREE.Points>(null);
+  const pointsRef = useRef<Points>(null);
   const countX = 65; // Keep horizontal width the same
   const countZ = 140; // Greatly increase depth (length) to cover the longer journey
   const mouse = useRef({ x: 0, y: 0 });
-  const [color, setColor] = useState("#0e0e0e");
+  const cosZRef = useRef<Float32Array>(new Float32Array(countZ));
+  const baseZRef = useRef<Float32Array>(new Float32Array(countZ));
+  const absDzRef = useRef<Float32Array>(new Float32Array(countZ));
+  const maxDxAtZRef = useRef<Float32Array>(new Float32Array(countZ));
+  const inBubbleDepthRef = useRef<Uint8Array>(new Uint8Array(countZ));
+  const isDark = useThemeObserver();
+  const color = useMemo((): string => isDark ? "#fafafa" : "#0e0e0e", [isDark]);
+
+  // Precompute constant spacing values once (never change)
+  const spacing = 0.28;
+  const offsetX = (countX * spacing) / 2;
+  const offsetZ = (countZ * spacing) / 2;
 
   // Track cursor coordinates
   useEffect(() => {
@@ -18,29 +34,16 @@ export default function ParticleWave(): React.JSX.Element {
       mouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.current.y = -(e.clientY / window.innerHeight) * 2 + 1;
     };
-    window.addEventListener("mousemove", handleMouseMove);
-
-    // Watch classList on documentElement for light/dark theme toggles
-    const updateThemeColor = (): void => {
-      const isDark = document.documentElement.classList.contains("dark");
-      setColor(isDark ? "#fafafa" : "#0e0e0e");
-    };
-    updateThemeColor();
-    const observer = new MutationObserver(updateThemeColor);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      observer.disconnect();
     };
   }, []);
 
   // Initialize flat grid array once
   const positions = useMemo(() => {
     const arr = new Float32Array(countX * countZ * 3);
-    const spacing = 0.28;
-    const offsetX = (countX * spacing) / 2;
-    const offsetZ = (countZ * spacing) / 2;
     for (let i = 0; i < countX; i++) {
       for (let j = 0; j < countZ; j++) {
         const idx = (i * countZ + j) * 3;
@@ -50,17 +53,16 @@ export default function ParticleWave(): React.JSX.Element {
       }
     }
     return arr;
-  }, [countX, countZ]);
+  }, [countX, countZ, spacing, offsetX, offsetZ]);
 
   useFrame((state) => {
     if (!pointsRef.current) return;
     const t = state.clock.getElapsedTime();
-    const posAttr = pointsRef.current.geometry.attributes.position as THREE.BufferAttribute;
+    const posAttr = pointsRef.current.geometry.attributes.position as BufferAttribute;
     const arr = posAttr.array as Float32Array;
 
-    // Track vertical scroll progress from document custom property
-    const progressStr = document.documentElement.style.getPropertyValue("--scroll-progress");
-    const progress = progressStr ? parseFloat(progressStr) : 0;
+    // Read scroll progress from shared JS variable (avoids DOM read + parseFloat every frame)
+    const progress = scrollProgress;
 
     // Calculate current pod focus point (gravity well center)
     const activeIndex = Math.max(0, Math.min(POD_COORDINATES.length - 2, Math.floor(progress)));
@@ -69,17 +71,40 @@ export default function ParticleWave(): React.JSX.Element {
     
     const startPod = POD_COORDINATES[activeIndex];
     const endPod = POD_COORDINATES[activeIndex + 1];
-    const currentFocus = new THREE.Vector3().lerpVectors(startPod, endPod, easeT);
+    _waveFocus.lerpVectors(startPod, endPod, easeT);
 
-    const spacing = 0.28;
-    const offsetX = (countX * spacing) / 2;
-    const offsetZ = (countZ * spacing) / 2;
+    // Reuse cached Float32Arrays / Uint8Arrays to avoid per-frame GC allocations
+    const cosZ = cosZRef.current;
+    const baseZArr = baseZRef.current;
+    const absDzArr = absDzRef.current;
+    const maxDxAtZArr = maxDxAtZRef.current;
+    const inBubbleDepth = inBubbleDepthRef.current;
 
-    // Precompute cosZ array of size 140 outside the nested loops (only 140 Math.cos calls per frame)
-    const cosZ = new Float32Array(countZ);
+    // Hoist constants out of 9,100-iteration inner loop
+    const podX = _waveFocus.x;
+    const podZ = _waveFocus.z;
+    const targetX = mouse.current.x * 6;
+    const targetZ = -mouse.current.y * 6;
+    const bubbleRadius = 2.4;
+    const bubbleRadiusSq = 5.76; // 2.4 * 2.4 precomputed
+    const mouseRadiusSq = 4.84; // 2.2 * 2.2 precomputed
+
+    // Precompute row-specific (depth-specific) calculations (only 140 iterations per frame)
     for (let j = 0; j < countZ; j++) {
-      const baseZ = j * spacing - offsetZ;
-      cosZ[j] = Math.cos(baseZ * 0.45 + t * 0.9) * 0.28;
+      const bz = j * spacing - offsetZ;
+      baseZArr[j] = bz;
+      cosZ[j] = Math.cos(bz * 0.45 + t * 0.9) * 0.28;
+
+      const dz = (bz - 6) - podZ;
+      const absDz = Math.abs(dz);
+      absDzArr[j] = absDz;
+
+      if (absDz < bubbleRadius) {
+        inBubbleDepth[j] = 1;
+        maxDxAtZArr[j] = Math.sqrt(bubbleRadiusSq - absDz * absDz) / 0.48;
+      } else {
+        inBubbleDepth[j] = 0;
+      }
     }
 
     // Localized wave heights and gravity well computation
@@ -87,36 +112,22 @@ export default function ParticleWave(): React.JSX.Element {
       const baseX = i * spacing - offsetX;
       // Precompute sinX in the outer loop (only 65 Math.sin calls per frame)
       const sinX = Math.sin(baseX * 0.45 + t * 1.3) * 0.28;
+      // Precompute dx and absDx in the outer loop (only 65 calculations instead of 9,100 per frame)
+      const dx = baseX - podX;
+      const absDx = Math.abs(dx);
 
       for (let j = 0; j < countZ; j++) {
         const idx = (i * countZ + j) * 3;
-        const baseZ = j * spacing - offsetZ;
-
-        const worldX = baseX;
-        // Shift wave further back in Z so it covers the increased gap between cards
-        const worldZ = baseZ - 6; 
-        const podX = currentFocus.x;
-        const podZ = currentFocus.z;
-
-        const dx = worldX - podX;
-        const dz = worldZ - podZ;
+        const baseZ = baseZArr[j];
 
         let finalX = baseX;
-        let finalZ = baseZ;
         
         // Combine two overlapping waves (precomputed sinX and cosZ[j] - 0 heavy trig calls inside this inner loop!)
         let y = sinX + cosZ[j];
 
         // Pod gravity trench: clear a direct visual path from the camera to the card
-        const bubbleRadius = 2.4; // Reduced from 3.6 since cards are floating higher
-        const absDz = Math.abs(dz);
-        
-        // Only affect particles within the front-to-back depth of the bubble radius
-        if (absDz < bubbleRadius) {
-          // Calculate the X-boundary of the oval at this exact Z-depth
-          // Equation: (x * 0.48)^2 + dz^2 = R^2
-          const maxDxAtZ = Math.sqrt(bubbleRadius ** 2 - absDz ** 2) / 0.48;
-          const absDx = Math.abs(dx);
+        if (inBubbleDepth[j] === 1) {
+          const maxDxAtZ = maxDxAtZArr[j];
           
           if (absDx < maxDxAtZ) {
             const repelForce = 1 - (absDx / maxDxAtZ);
@@ -135,18 +146,19 @@ export default function ParticleWave(): React.JSX.Element {
           }
         }
 
-        // Interactive mouse distortion
-        const targetX = mouse.current.x * 6;
-        const targetZ = -mouse.current.y * 6;
-        const distToMouse = Math.sqrt((finalX - targetX) ** 2 + (finalZ - targetZ) ** 2);
-        if (distToMouse < 2.2) {
+        // Interactive mouse distortion (squared-distance early bailout: 9,100 sqrt → ~80)
+        const dxm = finalX - targetX;
+        const dzm = baseZ - targetZ;
+        const distSqMouse = dxm * dxm + dzm * dzm;
+        if (distSqMouse < mouseRadiusSq) {
+          const distToMouse = Math.sqrt(distSqMouse);
           const force = (1 - distToMouse / 2.2) * 0.65;
           y += Math.sin(distToMouse * 3.5 - t * 4) * force * 0.4;
         }
 
         arr[idx] = finalX;
         arr[idx + 1] = y;
-        arr[idx + 2] = finalZ;
+        arr[idx + 2] = baseZ;
       }
     }
     posAttr.needsUpdate = true;
@@ -168,7 +180,7 @@ export default function ParticleWave(): React.JSX.Element {
         sizeAttenuation={true}
         transparent={true}
         opacity={0.38}
-        blending={THREE.NormalBlending}
+        blending={NormalBlending}
       />
     </points>
   );

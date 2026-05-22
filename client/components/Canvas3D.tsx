@@ -1,15 +1,16 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React, { Suspense, useCallback, useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
 import ParticleWave from "./ParticleWave";
+import StarField from "./StarField";
 import SceneController from "./SceneController";
 import Pod3D from "./Pod3D";
 import SectionHome from "./SectionHome";
 import SectionWorks from "./SectionWorks";
 import SectionAbout from "./SectionAbout";
 import SectionExperience from "./SectionExperience";
-import SectionServices from "./SectionServices";
+import SectionGitHub from "./SectionGitHub";
 import SectionContact from "./SectionContact";
 import { Project, Experience } from "../types/portfolio.types";
 
@@ -21,20 +22,25 @@ interface Canvas3DProps {
 }
 
 export default function Canvas3D({ showContent, activeSlide, onExploreProject, onExploreExperience }: Canvas3DProps): React.JSX.Element {
-  const slides = [
+  const isNear = useCallback(
+    (index: number): boolean => Math.abs(activeSlide - index) <= 1,
+    [activeSlide]
+  );
+
+  const slides = useMemo(() => [
     { id: "home", component: <SectionHome ready={showContent} /> },
-    { id: "about", component: <SectionAbout /> },
-    { id: "works", component: <SectionWorks onExploreProject={onExploreProject} /> },
-    { id: "experience", component: <SectionExperience onExploreExperience={onExploreExperience} /> },
-    { id: "services", component: <SectionServices /> },
+    { id: "about", component: <SectionAbout isNearActive={isNear(1)} /> },
+    { id: "works", component: <SectionWorks onExploreProject={onExploreProject} isNearActive={isNear(2)} /> },
+    { id: "experience", component: <SectionExperience onExploreExperience={onExploreExperience} isNearActive={isNear(3)} /> },
+    { id: "github", component: <SectionGitHub /> },
     { id: "contact", component: <SectionContact /> },
-  ];
+  ], [showContent, isNear, onExploreProject, onExploreExperience]);
 
   return (
     <div className="canvas-container" style={{ pointerEvents: "auto", zIndex: 10 }}>
       <Canvas
         camera={{ position: [0, 0, 5], fov: 60 }}
-        gl={{ antialias: true, alpha: true }}
+        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       >
         <Suspense fallback={null}>
           {/* Advanced Studio Lighting for Glass Refraction & Highlights */}
@@ -44,9 +50,17 @@ export default function Canvas3D({ showContent, activeSlide, onExploreProject, o
           <pointLight position={[8, -5, 4]} intensity={1.5} color="#ff9100" />  {/* Warm amber rim light */}
 
           <ParticleWave />
+          <StarField />
           <SceneController />
           {slides.map((slide, index) => (
-            <Pod3D key={slide.id} id={slide.id} index={index} isActive={activeSlide === index}>
+            <Pod3D
+              key={slide.id}
+              id={slide.id}
+              index={index}
+              isActive={activeSlide === index}
+              isNearActive={isNear(index)}
+              activeSlide={activeSlide}
+            >
               {slide.component}
             </Pod3D>
           ))}

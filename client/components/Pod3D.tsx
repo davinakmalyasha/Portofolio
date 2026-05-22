@@ -3,29 +3,24 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
-import * as THREE from "three";
+import { Group, MathUtils } from "three";
 import { SlideSection3DProps } from "../types/portfolio.types";
 import { POD_COORDINATES } from "./SceneController";
 import GlassPod3D from "./GlassPod3D";
+import { useThemeObserver } from "../hooks/useThemeObserver";
 
 interface Pod3DProps extends SlideSection3DProps {
   isActive: boolean;
+  isNearActive: boolean;
+  activeSlide: number;
 }
 
-export default function Pod3D({ children, id, index, isActive }: Pod3DProps): React.JSX.Element {
-  const [isDark, setIsDark] = useState<boolean>(false);
-  const groupRef = useRef<THREE.Group>(null);
-  const sectionRef = useRef<HTMLElement>(null);
+export default function Pod3D({ children, id, index, isActive, isNearActive, activeSlide }: Pod3DProps): React.JSX.Element {
+  const isDark = useThemeObserver();
+  const [hasBeenNearActive] = useState<boolean>(true);
 
-  useEffect(() => {
-    const updateTheme = (): void => {
-      setIsDark(document.documentElement.classList.contains("dark"));
-    };
-    updateTheme();
-    const observer = new MutationObserver(updateTheme);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
-    return () => observer.disconnect();
-  }, []);
+  const groupRef = useRef<Group>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (sectionRef.current) {
@@ -58,8 +53,8 @@ export default function Pod3D({ children, id, index, isActive }: Pod3DProps): Re
     const targetRotX = isActive ? state.pointer.y * 0.12 : 0;
     const targetRotY = isActive ? state.pointer.x * 0.12 : 0;
 
-    groupRef.current.rotation.x = THREE.MathUtils.lerp(groupRef.current.rotation.x, targetRotX, 0.08);
-    groupRef.current.rotation.y = THREE.MathUtils.lerp(groupRef.current.rotation.y, targetRotY, 0.08);
+    groupRef.current.rotation.x = MathUtils.lerp(groupRef.current.rotation.x, targetRotX, 0.08);
+    groupRef.current.rotation.y = MathUtils.lerp(groupRef.current.rotation.y, targetRotY, 0.08);
   });
 
   const labelText = id.toUpperCase().split("").join(" ");
@@ -70,7 +65,7 @@ export default function Pod3D({ children, id, index, isActive }: Pod3DProps): Re
       <group ref={groupRef}>
         {/* Monolithic 3D backing plate with micro-chamfers */}
         {id !== "home" && (
-          <GlassPod3D isActive={isActive} isDark={isDark} index={index} />
+          <GlassPod3D isActive={isActive} isDark={isDark} index={index} activeSlide={activeSlide} />
         )}
 
         {/* Floating 2D HTML Content overlay perfectly aligned in front of WebGL backdrop */}
@@ -101,7 +96,9 @@ export default function Pod3D({ children, id, index, isActive }: Pod3DProps): Re
               <div className="capsule-label">{labelText}</div>
 
               {/* Content body containing slides */}
-              <div className="capsule-content-card">{children}</div>
+              <div className="capsule-content-card">
+                {hasBeenNearActive ? children : null}
+              </div>
             </div>
           </section>
         </Html>

@@ -15,6 +15,9 @@ export interface NeuralNetworkData {
 
 // A helper function defined outside the hook to generate bases and scatters deterministically.
 // Because it is defined outside the hook, it doesn't trigger React's hook/render immutability or purity warnings.
+const PARTICLE_COUNT = 50;
+const PACKET_COUNT = 6;
+
 function generateBasesAndScatters(particleCount: number): [Float32Array, Float32Array] {
   let seed = 42;
   const random = (): number => {
@@ -71,61 +74,57 @@ function generateBasesAndScatters(particleCount: number): [Float32Array, Float32
   return [bases, scatters];
 }
 
-export function useNeuralNetwork(): NeuralNetworkData {
-  const particleCount = 120;
-  const packetCount = 12;
+// Compute the static base coordinates and scatter offsets once at load time
+const [SHARED_BASE_POSITIONS, SHARED_SCATTER_OFFSETS] = generateBasesAndScatters(PARTICLE_COUNT);
 
-  // Generate target coordinates (basePositions) and scatter offsets (scatterOffsets)
-  const [basePositions, scatterOffsets] = useMemo((): [Float32Array, Float32Array] => {
-    return generateBasesAndScatters(particleCount);
-  }, [particleCount]);
+// Compute the static connection pairs once at load time
+const SHARED_CONNECTION_PAIRS = (() => {
+  const pairs: number[][] = [];
+  const threshold = 0.70; // distance threshold in base units
+  const thresholdSq = threshold * threshold; // squared threshold avoids Math.sqrt
 
-  const initialPositions = useMemo((): Float32Array => new Float32Array(particleCount * 3), [particleCount]);
-  const packetInitialPositions = useMemo((): Float32Array => new Float32Array(packetCount * 3), [packetCount]);
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const idxI = i * 3;
+    const xi = SHARED_BASE_POSITIONS[idxI];
+    const yi = SHARED_BASE_POSITIONS[idxI + 1];
+    const zi = SHARED_BASE_POSITIONS[idxI + 2];
 
-  // Pre-calculate proximity-based connection pairs for the network
-  const connectionPairs = useMemo((): number[][] => {
-    const pairs: number[][] = [];
-    const threshold = 0.52; // distance threshold in base units
+    for (let j = i + 1; j < PARTICLE_COUNT; j++) {
+      const idxJ = j * 3;
+      const xj = SHARED_BASE_POSITIONS[idxJ];
+      const yj = SHARED_BASE_POSITIONS[idxJ + 1];
+      const zj = SHARED_BASE_POSITIONS[idxJ + 2];
 
-    for (let i = 0; i < particleCount; i++) {
-      const idxI = i * 3;
-      const xi = basePositions[idxI];
-      const yi = basePositions[idxI + 1];
-      const zi = basePositions[idxI + 2];
+      const dx = xi - xj;
+      const dy = yi - yj;
+      const dz = zi - zj;
+      const distSq = dx * dx + dy * dy + dz * dz;
 
-      for (let j = i + 1; j < particleCount; j++) {
-        const idxJ = j * 3;
-        const xj = basePositions[idxJ];
-        const yj = basePositions[idxJ + 1];
-        const zj = basePositions[idxJ + 2];
-
-        const dx = xi - xj;
-        const dy = yi - yj;
-        const dz = zi - zj;
-        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-        if (dist < threshold) {
-          pairs.push([i, j]);
-        }
+      if (distSq < thresholdSq) {
+        pairs.push([i, j]);
       }
     }
+  }
 
-    // Cap at a maximum of 250 connections to keep rendering fast and elegant
-    return pairs.slice(0, 250);
-  }, [basePositions, particleCount]);
+  // Cap at a maximum of 100 connections to keep rendering fast and elegant
+  return pairs.slice(0, 100);
+})();
+
+export function useNeuralNetwork(): NeuralNetworkData {
+  const initialPositions = useMemo((): Float32Array => new Float32Array(PARTICLE_COUNT * 3), []);
+  const packetInitialPositions = useMemo((): Float32Array => new Float32Array(PACKET_COUNT * 3), []);
 
   const linePositions = useMemo((): Float32Array => {
-    return new Float32Array(connectionPairs.length * 2 * 3);
-  }, [connectionPairs]);
+    return new Float32Array(SHARED_CONNECTION_PAIRS.length * 2 * 3);
+  }, []);
 
   return {
-    particleCount,
-    packetCount,
-    basePositions,
-    scatterOffsets,
+    particleCount: PARTICLE_COUNT,
+    packetCount: PACKET_COUNT,
+    basePositions: SHARED_BASE_POSITIONS,
+    scatterOffsets: SHARED_SCATTER_OFFSETS,
     initialPositions,
-    connectionPairs,
+    connectionPairs: SHARED_CONNECTION_PAIRS,
     linePositions,
     packetInitialPositions,
   };
