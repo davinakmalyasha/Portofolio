@@ -54,6 +54,7 @@ export default function ExperienceDetailModal({
             company={experience.company}
             category={experience.category}
             year={experience.year}
+            date={experience.date}
             role={experience.role}
             linkGithub={experience.linkGithub}
             linkDemo={experience.linkDemo}

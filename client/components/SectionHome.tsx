@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
 import { motion } from "framer-motion";
 import SlideSection3D from "./SlideSection3D";
 
@@ -8,7 +8,7 @@ interface SectionHomeProps {
   ready: boolean;
 }
 
-export default function SectionHome({ ready }: SectionHomeProps): React.JSX.Element {
+const SectionHome = memo(function SectionHome({ ready }: SectionHomeProps): React.JSX.Element {
   return (
     <SlideSection3D id="home" index={0}>
       <div className="home-slide-content">
@@ -50,4 +50,6 @@ export default function SectionHome({ ready }: SectionHomeProps): React.JSX.Elem
       </motion.div>
     </SlideSection3D>
   );
-}
+});
+
+export default SectionHome;

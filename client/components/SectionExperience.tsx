@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, memo } from "react";
 import SlideSection3D from "./SlideSection3D";
 import { EXPERIENCES_DATA } from "../data/experiences";
 import { Experience } from "../types/portfolio.types";
@@ -8,10 +8,12 @@ import ExperienceCard from "./ExperienceCard";
 
 interface SectionExperienceProps {
   onExploreExperience: (exp: Experience) => void;
+  isNearActive: boolean;
 }
 
-export default function SectionExperience({
+const SectionExperience = memo(function SectionExperience({
   onExploreExperience,
+  isNearActive,
 }: SectionExperienceProps): React.JSX.Element {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollOffset, setScrollOffset] = useState<number>(0);
@@ -29,9 +31,13 @@ export default function SectionExperience({
 
   useEffect(() => {
     checkScroll();
+    const timer = setTimeout(checkScroll, 150);
     window.addEventListener("resize", checkScroll);
-    return () => window.removeEventListener("resize", checkScroll);
-  }, []);
+    return () => {
+      window.removeEventListener("resize", checkScroll);
+      clearTimeout(timer);
+    };
+  }, [isNearActive]);
 
   const showLeftBtn = scrollOffset > 0;
   const showRightBtn = scrollOffset < maxScroll;
@@ -92,10 +98,13 @@ export default function SectionExperience({
               experience={exp}
               idx={idx}
               onExploreExperience={onExploreExperience}
+              isNearActive={isNearActive}
             />
           ))}
         </div>
       </div>
     </SlideSection3D>
   );
-}
+});
+
+export default SectionExperience;

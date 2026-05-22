@@ -39,8 +39,7 @@ export default function SectionServices(): React.JSX.Element {
             key={srv.num}
             className="service-card cursor-target"
             initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.15, duration: 0.5 }}
           >
             <div className="service-header">

@@ -1,7 +1,20 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 
-export function useCopyToClipboard(resetInterval: number = 2000) {
+interface UseCopyToClipboardReturn {
+  copied: boolean;
+  copyText: (text: string) => Promise<boolean>;
+}
+
+export function useCopyToClipboard(resetInterval: number = 2000): UseCopyToClipboardReturn {
   const [copied, setCopied] = useState<boolean>(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  // Clear any pending reset timer on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   const copyText = useCallback(async (text: string): Promise<boolean> => {
     if (typeof window === "undefined") return false;
@@ -10,8 +23,9 @@ export function useCopyToClipboard(resetInterval: number = 2000) {
     if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
       try {
         await navigator.clipboard.writeText(text);
+        if (timerRef.current) clearTimeout(timerRef.current);
         setCopied(true);
-        setTimeout(() => setCopied(false), resetInterval);
+        timerRef.current = setTimeout(() => setCopied(false), resetInterval);
         return true;
       } catch (err) {
         console.warn("navigator.clipboard.writeText failed, using fallback:", err);
@@ -53,8 +67,9 @@ export function useCopyToClipboard(resetInterval: number = 2000) {
       document.body.removeChild(textarea);
       
       if (success) {
+        if (timerRef.current) clearTimeout(timerRef.current);
         setCopied(true);
-        setTimeout(() => setCopied(false), resetInterval);
+        timerRef.current = setTimeout(() => setCopied(false), resetInterval);
         return true;
       } else {
         console.error("Fallback execCommand copy returned false");

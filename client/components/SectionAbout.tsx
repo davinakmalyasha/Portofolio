@@ -1,16 +1,20 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
 import SlideSection3D from "./SlideSection3D";
 import ProfileColumn from "./about/ProfileColumn";
 import AboutTab from "./about/AboutTab";
 
-export default function SectionAbout(): React.JSX.Element {
+interface SectionAboutProps {
+  isNearActive: boolean;
+}
+
+const SectionAbout = memo(function SectionAbout({ isNearActive }: SectionAboutProps): React.JSX.Element {
   return (
     <SlideSection3D id="about" index={1}>
       <div className="about-slide-layout">
         {/* Left Side Column: Profile Picture & Core Meta details */}
-        <ProfileColumn />
+        <ProfileColumn isNearActive={isNearActive} />
 
         {/* Right Side Column: Static Content */}
         <div className="about-right-content-area">
@@ -21,4 +25,7 @@ export default function SectionAbout(): React.JSX.Element {
       </div>
     </SlideSection3D>
   );
-}
+});
+
+export default SectionAbout;
+

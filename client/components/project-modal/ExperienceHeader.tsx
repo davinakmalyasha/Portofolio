@@ -7,6 +7,7 @@ interface ExperienceHeaderProps {
   company: string;
   category?: string;
   year?: string;
+  date?: string;
   role?: string;
   linkGithub?: string;
   linkDemo?: string;
@@ -17,6 +18,7 @@ export default function ExperienceHeader({
   company,
   category,
   year,
+  date,
   role,
   linkGithub,
   linkDemo,
@@ -41,7 +43,7 @@ export default function ExperienceHeader({
           </div>
           <div className="pm-meta-box">
             <span className="pm-meta-lbl">TIMELINE</span>
-            <span className="pm-meta-val">{year || "2024"}</span>
+            <span className="pm-meta-val">{date || year || "2024"}</span>
           </div>
         </div>
 

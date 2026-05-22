@@ -1,12 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SectionHome from "./SectionHome";
 import SectionAbout from "./SectionAbout";
 import SectionWorks from "./SectionWorks";
 import SectionExperience from "./SectionExperience";
-import SectionServices from "./SectionServices";
+import SectionGitHub from "./SectionGitHub";
 import SectionContact from "./SectionContact";
 import { Project, Experience } from "../types/portfolio.types";
 
@@ -23,14 +23,19 @@ export default function Fallback2D({
   onExploreProject,
   onExploreExperience,
 }: Fallback2DProps): React.JSX.Element {
-  const slides = [
+  const isNear = useCallback(
+    (index: number): boolean => Math.abs(activeSlide - index) <= 1,
+    [activeSlide]
+  );
+
+  const slides = useMemo(() => [
     { id: "home", component: <SectionHome ready={showContent} /> },
-    { id: "about", component: <SectionAbout /> },
-    { id: "works", component: <SectionWorks onExploreProject={onExploreProject} /> },
-    { id: "experience", component: <SectionExperience onExploreExperience={onExploreExperience} /> },
-    { id: "services", component: <SectionServices /> },
+    { id: "about", component: <SectionAbout isNearActive={isNear(1)} /> },
+    { id: "works", component: <SectionWorks onExploreProject={onExploreProject} isNearActive={isNear(2)} /> },
+    { id: "experience", component: <SectionExperience onExploreExperience={onExploreExperience} isNearActive={isNear(3)} /> },
+    { id: "github", component: <SectionGitHub /> },
     { id: "contact", component: <SectionContact /> },
-  ];
+  ], [showContent, isNear, onExploreProject, onExploreExperience]);
 
   return (
     <div className="fallback-2d-container fallback-2d">

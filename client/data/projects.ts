@@ -5,16 +5,16 @@ export const PROJECTS_DATA: Project[] = [
     id: 1,
     title: "4C Construction Web",
     category: "Construction & Bidding Platform",
-    year: "2024",
+    year: "2026",
     num: "01",
+    status: "Development",
     description: "All-in-one platform for property listing, professional hiring, and construction project bidding.",
-    techStack: ["Laravel", "PHP", "MySQL", "HTML", "CSS"],
+    techStack: ["React", "Laravel (PHP)", "MySQL", "TypeScript"],
     images: [
-      "/imgOrIcon/1769550926438.png",
-      "/imgOrIcon/1769550926443.png",
-      "/imgOrIcon/1769550926446.png",
-      "/imgOrIcon/1769550926449.png",
-      "/imgOrIcon/1769550926454.png"
+      "/imgOrIcon/4CProject/4CProject_content1.avif",
+      "/imgOrIcon/4CProject/4CProject_content2.avif",
+      "/imgOrIcon/4CProject/4CProject_content3.avif",
+      "/imgOrIcon/4CProject/4CProject_content4.avif"
     ],
     linkGithub: "https://github.com/davinakmalyasha/4Ceria-4C-",
     linkDemo: "https://github.com/davinakmalyasha/4Ceria-4C-",
@@ -33,47 +33,17 @@ export const PROJECTS_DATA: Project[] = [
   },
   {
     id: 2,
-    title: "MINDEASE",
-    category: "Mental Health Platform",
-    year: "2024",
-    num: "02",
-    description: "A comprehensive mental health website designed to track wellness and improve cognitive health.",
-    techStack: ["React", "TypeScript", "TailwindCSS", "Framer Motion"],
-    images: [
-      "/imgOrIcon/1769547129586.png",
-      "/imgOrIcon/1769547129614.png",
-      "/imgOrIcon/1769547129625.png",
-      "/imgOrIcon/1769547129628.png"
-    ],
-    linkGithub: "https://github.com/davinakmalyasha/MindEase",
-    linkDemo: "https://github.com/davinakmalyasha/MindEase",
-    role: "Frontend UI/UX Developer",
-    overview: "MindEase is an immersive mental wellness application aiming to provide users with tools to log mood shifts, practice mindfulness, and improve overall cognitive health. The project features visually calming aesthetics, smooth animations to alleviate anxiety, and personalized tracker analytics.",
-    challenges: [
-      "Creating highly smooth, comforting transitions that load instantly without layout shifting.",
-      "Structuring complex local state for weekly mood charts and daily task checklists.",
-      "Ensuring accessible design for users experiencing high stress or visual sensitivity."
-    ],
-    solutions: [
-      "Utilized Framer Motion for hardware-accelerated animations and micro-interactions.",
-      "Designed lightweight custom hooks to manage transient mood logs and client-side history.",
-      "Adopted a curated soft monochrome/pastel color scheme with high readability and screen reader compliance."
-    ]
-  },
-  {
-    id: 3,
     title: "DFD AGENCY",
     category: "Agency Website",
-    year: "2024",
-    num: "03",
+    year: "2026",
+    num: "02",
+    status: "Deployed",
     description: "A professional and modern agency website built to showcase digital services and brand identity.",
-    techStack: ["Next.js", "Framer Motion", "React", "CSS"],
+    techStack: ["Next.js", "Express.js", "MySQL", "TypeScript"],
     images: [
-      "/imgOrIcon/1769550828466.png",
-      "/imgOrIcon/1769550828468.png",
-      "/imgOrIcon/1769550828473.png",
-      "/imgOrIcon/1769550828475.png",
-      "/imgOrIcon/1769550828478.png"
+      "/imgOrIcon/DFDAgency/dfdagency_content1.avif",
+      "/imgOrIcon/DFDAgency/dfdagency_content2.avif",
+      "/imgOrIcon/DFDAgency/dfdagency_content3.avif"
     ],
     linkGithub: "https://github.com/davinakmalyasha/DFDAgencyWebsite",
     linkDemo: "https://github.com/davinakmalyasha/DFDAgencyWebsite",
@@ -91,15 +61,16 @@ export const PROJECTS_DATA: Project[] = [
     ]
   },
   {
-    id: 4,
+    id: 3,
     title: "Portofolio Website",
     category: "Personal Portfolio",
     year: "2026",
-    num: "04",
+    num: "03",
+    status: "Deployed",
     description: "Futuristic 3D portfolio showcase with glassmorphic cards and scroll camera animations.",
-    techStack: ["React", "Next.js", "Three.js", "TypeScript", "TailwindCSS"],
+    techStack: ["React", "Next.js", "Three.js", "TypeScript", "TailwindCSS", "Lenis", "GSAP & Framer Motion"],
     images: [
-      "/imgOrIcon/1769551128774.png"
+      "/imgOrIcon/1769551128774.avif"
     ],
     linkGithub: "https://github.com/davinakmalyasha/Portofolio",
     linkDemo: "https://github.com/davinakmalyasha/Portofolio",
@@ -114,6 +85,36 @@ export const PROJECTS_DATA: Project[] = [
       "Created custom lerped interpolation vectors driven by custom CSS variables.",
       "Optimized custom shaders, lighting counts, and geometry vertex counts in Three.js.",
       "Rendered critical elements in normal DOM space outside of the WebGL canvas to guarantee proper filter operation."
+    ]
+  },
+  {
+    id: 4,
+    title: "MINDEASE",
+    category: "Mental Health Platform",
+    year: "2025",
+    num: "04",
+    status: "Development",
+    description: "A comprehensive mental health website designed to track wellness and improve cognitive health.",
+    techStack: ["React", "Go (Golang)", "MySQL", "TypeScript"],
+    images: [
+      "/imgOrIcon/1769547129586.avif",
+      "/imgOrIcon/1769547129614.avif",
+      "/imgOrIcon/1769547129625.avif",
+      "/imgOrIcon/1769547129628.avif"
+    ],
+    linkGithub: "https://github.com/davinakmalyasha/MindEase",
+    linkDemo: "https://github.com/davinakmalyasha/MindEase",
+    role: "Frontend UI/UX Developer",
+    overview: "MindEase is an immersive mental wellness application aiming to provide users with tools to log mood shifts, practice mindfulness, and improve overall cognitive health. The project features visually calming aesthetics, smooth animations to alleviate anxiety, and personalized tracker analytics.",
+    challenges: [
+      "Creating highly smooth, comforting transitions that load instantly without layout shifting.",
+      "Structuring complex local state for weekly mood charts and daily task checklists.",
+      "Ensuring accessible design for users experiencing high stress or visual sensitivity."
+    ],
+    solutions: [
+      "Utilized Framer Motion for hardware-accelerated animations and micro-interactions.",
+      "Designed lightweight custom hooks to manage transient mood logs and client-side history.",
+      "Adopted a curated soft monochrome/pastel color scheme with high readability and screen reader compliance."
     ]
   }
 ];

@@ -17,6 +17,16 @@ const outfit = Outfit({
 export const metadata = {
   title: "Davin | Portfolio",
   description: "Futuristic Monochrome 3D Helix Portfolio Landing Page",
+  openGraph: {
+    title: "Davin | Portfolio",
+    description: "Futuristic Monochrome 3D Helix Portfolio Landing Page",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Davin | Portfolio",
+    description: "Futuristic Monochrome 3D Helix Portfolio Landing Page",
+  },
 };
 
 interface RootLayoutProps {

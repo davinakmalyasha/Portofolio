@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, memo } from "react";
 import SlideSection3D from "./SlideSection3D";
 import { PROJECTS_DATA } from "../data/projects";
 import { Project } from "../types/portfolio.types";
@@ -8,9 +8,10 @@ import WorkCard from "./WorkCard";
 
 interface SectionWorksProps {
   onExploreProject: (project: Project) => void;
+  isNearActive: boolean;
 }
 
-export default function SectionWorks({ onExploreProject }: SectionWorksProps): React.JSX.Element {
+const SectionWorks = memo(function SectionWorks({ onExploreProject, isNearActive }: SectionWorksProps): React.JSX.Element {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollOffset, setScrollOffset] = useState<number>(0);
   const [maxScroll, setMaxScroll] = useState<number>(0);
@@ -27,9 +28,13 @@ export default function SectionWorks({ onExploreProject }: SectionWorksProps): R
 
   useEffect(() => {
     checkScroll();
+    const timer = setTimeout(checkScroll, 150);
     window.addEventListener("resize", checkScroll);
-    return () => window.removeEventListener("resize", checkScroll);
-  }, []);
+    return () => {
+      window.removeEventListener("resize", checkScroll);
+      clearTimeout(timer);
+    };
+  }, [isNearActive]);
 
   const showLeftBtn = scrollOffset > 0;
   const showRightBtn = scrollOffset < maxScroll;
@@ -90,10 +95,13 @@ export default function SectionWorks({ onExploreProject }: SectionWorksProps): R
               work={work}
               idx={idx}
               onExploreProject={onExploreProject}
+              isNearActive={isNearActive}
             />
           ))}
         </div>
       </div>
     </SlideSection3D>
   );
-}
+});
+
+export default SectionWorks;

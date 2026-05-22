@@ -9,6 +9,7 @@ interface ProjectHeaderProps {
   role?: string;
   linkGithub?: string;
   linkDemo?: string;
+  status?: "Development" | "Deployed";
 }
 
 export default function ProjectHeader({
@@ -18,12 +19,15 @@ export default function ProjectHeader({
   role,
   linkGithub,
   linkDemo,
+  status,
 }: ProjectHeaderProps): React.JSX.Element {
   return (
     <div className="pm-header">
       <div className="pm-title-section">
         <h1>{title}</h1>
-        {category && <span className="pm-category-label">{category}</span>}
+        <div style={{ display: "flex", gap: "10px", alignItems: "center", marginTop: "8px", flexWrap: "wrap" }}>
+          {category && <span className="pm-category-label">{category}</span>}
+        </div>
       </div>
 
       <div className="pm-header-meta-actions">
@@ -50,14 +54,32 @@ export default function ProjectHeader({
             </a>
           )}
           {linkDemo && (
-            <a
-              href={linkDemo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="pm-action-btn demo"
-            >
-              LAUNCH LIVE APPLICATION ↗
-            </a>
+            status === "Development" ? (
+              <button
+                disabled
+                className="pm-action-btn demo-disabled"
+                style={{
+                  backgroundColor: "var(--card-bg)",
+                  color: "var(--text-muted)",
+                  border: "1px dashed var(--border-color)",
+                  cursor: "not-allowed",
+                  opacity: 0.6,
+                  pointerEvents: "none",
+                  userSelect: "none"
+                }}
+              >
+                THE PROJECT IS UNDER DEVELOPMENT
+              </button>
+            ) : (
+              <a
+                href={linkDemo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pm-action-btn demo"
+              >
+                LAUNCH LIVE APPLICATION ↗
+              </a>
+            )
           )}
         </div>
       </div>

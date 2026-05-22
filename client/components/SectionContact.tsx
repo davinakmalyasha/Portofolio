@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { memo } from "react";
 import { motion } from "framer-motion";
 import SlideSection3D from "./SlideSection3D";
 import { useCopyToClipboard } from "../hooks/useCopyToClipboard";
@@ -11,7 +11,7 @@ const NETWORKS = [
   { name: "UPWORK", href: "https://www.upwork.com/freelancers/~01707125094176615a" }
 ];
 
-export default function SectionContact(): React.JSX.Element {
+const SectionContact = memo(function SectionContact(): React.JSX.Element {
   const { copied, copyText } = useCopyToClipboard();
   const { time24, time12 } = useJakartaTime();
 
@@ -36,8 +36,7 @@ export default function SectionContact(): React.JSX.Element {
                 }
               }}
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, y: 0 }}
             >
               DAVINYASA06@GMAIL.COM
             </motion.div>
@@ -77,5 +76,7 @@ export default function SectionContact(): React.JSX.Element {
       </div>
     </SlideSection3D>
   );
-}
+});
+
+export default SectionContact;
 

@@ -3,14 +3,15 @@ import { Experience } from "../types/portfolio.types";
 export const EXPERIENCES_DATA: Experience[] = [
   {
     id: 1,
-    title: "IT Development Intern",
-    company: "PT LEN Industri (Persero)",
+    title: "IT Development",
+    company: "PT Len Industri (persero)",
     category: "Internship",
     year: "6 Months",
+    date: "9 Februari 2026 - 1 August 2026",
     num: "01",
     description: "Researched and built a laptop procurement system using five different development paradigms, from manual coding to asynchronous agentic orchestration.",
-    techStack: ["Camunda", "Formsflow.ai", "SPARC Framework", "Jules AI", "React", "TypeScript", "Python"],
-    images: ["/imgOrIcon/1769180001217.png"],
+    techStack: ["Camunda", "Formsflow.ai", "SPARC Framework", "Jules AI", "React", "TypeScript", "Laravel"],
+    images: ["/imgOrIcon/internship_len_itdev_6months.avif"],
     role: "IT Developer",
     overview: "Conducted research and developed a laptop procurement system to analyze, compare, and benchmark five distinct software development methodologies for enterprise workflows.",
     challenges: [

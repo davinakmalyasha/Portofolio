@@ -15,6 +15,7 @@ export interface Project {
   overview?: string;
   challenges?: string[];
   solutions?: string[];
+  status?: "Development" | "Deployed";
 }
 
 export interface Experience {
@@ -28,6 +29,7 @@ export interface Experience {
   linkDemo?: string;
   category?: string;
   year?: string;
+  date?: string;
   num?: string;
   role?: string;
   overview?: string;
@@ -59,5 +61,6 @@ export interface GlassPod3DProps {
   isActive: boolean;
   isDark: boolean;
   index: number;
+  activeSlide: number;
 }
 

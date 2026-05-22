@@ -42,7 +42,7 @@ export default function AboutTab(): React.JSX.Element {
             <span className="focus-card-title">PORTFOLIO WEBSITE</span>
           </div>
           <div className="focus-card more-card">
-            <span className="focus-card-title">+3</span>
+            <span className="focus-card-title">+1</span>
           </div>
         </div>
       </div>

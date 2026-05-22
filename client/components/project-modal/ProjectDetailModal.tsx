@@ -56,6 +56,7 @@ export default function ProjectDetailModal({
             role={project.role}
             linkGithub={project.linkGithub}
             linkDemo={project.linkDemo}
+            status={project.status}
           />
 
           <ProjectCarousel images={project.images} title={project.title} />
