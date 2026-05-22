@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import Lenis from "lenis";
 import { Project, Experience } from "../types/portfolio.types";
+import { setScrollProgress } from "./scrollProgress";
 
 interface UseLenisScrollReturn {
   activeSlide: number;
@@ -35,6 +36,7 @@ export function useLenisScroll(
       const progress = lenis.scroll / window.innerHeight;
       setActiveSlide(Math.round(progress));
       document.documentElement.style.setProperty("--scroll-progress", progress.toFixed(4));
+      setScrollProgress(progress);
     };
 
     lenis.on("scroll", handleScroll);
