@@ -1,4 +1,8 @@
-# 🌌 High-Performance Interactive 3D Portfolio — Davin Akmal Yasha
+#  High-Performance Interactive 3D Portfolio — Davin Akmal Yasha
+<img width="960" height="475" alt="image" src="https://github.com/user-attachments/assets/2d790d83-4c12-40e9-9f4a-412430c54071" />
+<img width="960" height="475" alt="image" src="https://github.com/user-attachments/assets/3d1f2d91-991b-425b-a68a-41201d67783f" />
+<img width="1918" height="950" alt="image" src="https://github.com/user-attachments/assets/6a7fb815-8f05-42af-ae54-41fb2ba7040c" />
+<img width="1911" height="948" alt="image" src="https://github.com/user-attachments/assets/7c13a197-049f-45c7-99a2-a195260020e3" />
 
 <p align="center">
   <img src="https://skillicons.dev/icons?i=nextjs,react,ts,threejs,github,svg" alt="Tech Stack" />
@@ -10,14 +14,11 @@
 
 ---
 
-## 👋 About Me & This Project
-Welcome! This is my personal website and portfolio showcasing my journey as a **Software Engineering Student at Telkom University** (GPA 3.55/4.00) and an **IT Developer** specializing in Full-Stack Development, Software Architecture, and AI Orchestration.
-
-Recently, during my IT Development internship at **PT Len Industri (Persero)**, I researched and developed a procurement workflow system comparing five development paradigms—ranging from standard full-stack components (React, TypeScript, Laravel) to enterprise visual workflow engines (Camunda, Formsflow.ai) and asynchronous AI Agentic Orchestration frameworks (SPARC, Jules).
-
+## About Me & This Project
+Welcome! This is my personal website and portfolio showcasing my journey as a **Software Engineering** specializing in Full-Stack Development, Software Architecture, and AI Orchestration.
 This personal portfolio is designed to be a physical proof-of-concept of advanced web engineering—coupling beautiful, premium WebGL/Three.js visual elements with mathematical and DOM-level micro-optimizations that deliver a flawless, high-speed UX.
 
-## 🚀 Architectural Vision & Tech Stack
+## Architectural Vision & Tech Stack
 This project represents a complete, ground-up optimization of interactive portfolio design, transforming heavy WebGL canvases into a lightweight, high-performance digital showcase.
 
 * **Framework Core:** **Next.js 16 (App Router)** & **React 19** utilizing experimental package import optimizations for zero bundle bloat.
@@ -29,7 +30,7 @@ This project represents a complete, ground-up optimization of interactive portfo
 
 ---
 
-## 🏎️ The Massive Optimization Suite
+## The Massive Optimization Suite
 
 A comprehensive engineering phase was executed to optimize execution times, eliminate layout thrashing, and reduce garbage collection overhead. Below are the key engineering solutions implemented:
 
@@ -49,7 +50,7 @@ A comprehensive engineering phase was executed to optimize execution times, elim
 
 ---
 
-## 📊 Performance Optimization Statistics
+## Performance Optimization Statistics
 
 ### WebGL & Core Logic Metrics
 The following table shows the statistical improvements and computational reductions achieved through custom engineering:
@@ -102,15 +103,16 @@ Saved Bundle Weight:    10.12 MB (88.7% reduction)
 
 ---
 
-## 📈 Lighthouse Audits & Benchmarks
+## Lighthouse Audits & Benchmarks
 
 Below is the verified performance comparison between the unoptimized, standard portfolio structure and the current custom-engineered high-performance build.
 
-> [!NOTE]
-> ### 📊 Put your performance difference here
 > * **Unoptimized Scores:** Run Lighthouse on the original branch and note the Performance, Accessibility, Best Practices, and SEO numbers.
+> * <img width="491" height="430" alt="image" src="https://github.com/user-attachments/assets/a17fe1fd-7ce1-4ea7-8388-67600eec4d36" />
+
 > * **Optimized Scores:** Run Lighthouse on this `main` branch to compare the massive drop in Main Thread Work and initial load times.
->
+> <img width="319" height="427" alt="image" src="https://github.com/user-attachments/assets/755fbdb4-82d3-445b-84b4-0c566aaafd03" />
+
 > | Metric | Unoptimized (Original) | Optimized (Current) | Overall Improvement |
 > | :--- | :---: | :---: | :---: |
 > | **Performance** | — | — | — |
