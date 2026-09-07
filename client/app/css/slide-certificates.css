@@ -1,0 +1,116 @@
+/* Certificates Section Styling */
+.certificates-slide-layout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 1100px;
+  height: 100%;
+  text-align: left;
+  transform-style: preserve-3d;
+  margin-top: 50px;
+}
+
+.certificate-card {
+  border: 1.5px solid var(--border-color);
+  background-color: var(--background);
+  padding: 24px 22px;
+  border-radius: 4px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transform-style: preserve-3d;
+  transform: translateZ(20px);
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s ease, background-color 0.4s ease;
+}
+
+.certificate-card:hover {
+  transform: translateZ(40px) translateY(-5px);
+  border-color: var(--foreground);
+}
+
+.certificate-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.certificate-category {
+  font-size: 0.55rem;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.certificate-year {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 900;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  border: 1px solid var(--border-color);
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+
+.certificate-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.3px;
+  color: var(--foreground);
+  line-height: 1.2;
+}
+
+.certificate-issuer {
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.certificate-description {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.certificate-link {
+  margin-top: 4px;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--foreground);
+  text-decoration: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 10px;
+  transition: letter-spacing 0.3s ease;
+  align-self: flex-start;
+}
+
+.certificate-link:hover {
+  letter-spacing: 2.5px;
+}
+
+/* Responsive Overrides */
+@media (max-width: 900px) {
+  .certificates-slide-layout {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-top: 30px;
+    overflow-y: auto;
+    max-height: 80vh;
+    padding-bottom: 40px;
+  }
+
+  .certificate-card {
+    transform: translateZ(10px);
+    min-height: 150px;
+  }
+}
