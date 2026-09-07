@@ -1,6 +1,7 @@
 @import "./base.css";
 @import "./layout.css";
 @import "./theme-toggle.css";
+@import "./2d-mode.css";
 @import "./intro-loader.css";
 @import "./slides.css";
 @import "./project-modal.css";

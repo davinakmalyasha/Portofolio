@@ -3,11 +3,16 @@
 import React from "react";
 import { motion } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
+import ViewModeToggle, { ViewMode } from "./ViewModeToggle";
 
 interface TopBarProps {
   onNavClick: (slideIndex: number) => void;
   activeSlide: number;
   ready: boolean;
+  isMobile: boolean;
+  viewMode: ViewMode;
+  onModeSwitch: (mode: ViewMode) => void;
+  onPrefetch2D: () => void;
 }
 
 const MENU_ITEMS = [
@@ -16,10 +21,11 @@ const MENU_ITEMS = [
   { label: "WORKS", index: 2 },
   { label: "EXPERIENCE", index: 3 },
   { label: "GITHUB", index: 4 },
-  { label: "CONTACT", index: 5 }
+  { label: "CERTIFICATES", index: 5 },
+  { label: "CONTACT", index: 6 }
 ];
 
-export default function TopBar({ onNavClick, activeSlide, ready }: TopBarProps): React.JSX.Element {
+export default function TopBar({ onNavClick, activeSlide, ready, isMobile, viewMode, onModeSwitch, onPrefetch2D }: TopBarProps): React.JSX.Element {
   return (
     <motion.header
       className="topBar"
@@ -51,6 +57,10 @@ export default function TopBar({ onNavClick, activeSlide, ready }: TopBarProps):
             ))}
           </ul>
         </nav>
+        {/* 3D access is disabled on small screens — mode is locked to 2D there */}
+        {!isMobile && (
+          <ViewModeToggle mode={viewMode} onSwitch={onModeSwitch} onPrefetch2D={onPrefetch2D} />
+        )}
         <ThemeToggle />
       </div>
     </motion.header>

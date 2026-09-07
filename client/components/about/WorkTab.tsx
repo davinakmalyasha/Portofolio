@@ -4,22 +4,16 @@ import React from "react";
 
 const WORK_EXPERIENCES = [
   {
-    role: "AI & Full-Stack Engineer",
-    company: "Freelance / Independent Contracts",
-    period: "2024 - PRESENT",
-    desc: "Developing custom AI agents, custom Computer Vision inference APIs, and building responsive full-stack Next.js dashboards."
+    role: "IT Development Intern",
+    company: "PT LEN Industri (Persero) | Bandung, Indonesia",
+    period: "FEB 2026 - AUG 2026",
+    desc: "Architected multi-agent SDLC automation (LangChain, LangGraph) and procurement BPM proofs-of-concept (Camunda, Formsflow.ai, React); benchmarked Jules and Antigravity + SPARC agents."
   },
   {
-    role: "Machine Learning Associate",
-    company: "Tech Systems Lab",
-    period: "2023 - 2024",
-    desc: "Worked on automated object classification pipelines and deployed localized deep learning model weights to cloud servers."
-  },
-  {
-    role: "Creative Web Developer",
-    company: "Digital Studio Corp",
-    period: "2021 - 2023",
-    desc: "Crafted interactive web animations and implemented WebGL-based product customizers."
+    role: "Freelance Agentic Software Engineer",
+    company: "Centrum Badminton | Bandung, Indonesia",
+    period: "AUG 2026 - PRESENT",
+    desc: "Building multi-tenant Golang + Supabase/PostgreSQL backend with multi-persona AI agents (customer, staff, owner) and automated Excel financial reports."
   }
 ];
 

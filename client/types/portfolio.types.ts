@@ -37,6 +37,16 @@ export interface Experience {
   solutions?: string[];
 }
 
+export interface Certificate {
+  id: number;
+  title: string;
+  issuer: string;
+  year: string;
+  description: string;
+  category?: string;
+  credentialUrl?: string;
+}
+
 export interface SlideSection3DProps {
   children: React.ReactNode;
   id: string;

@@ -3,13 +3,13 @@ import { Project } from "../types/portfolio.types";
 export const PROJECTS_DATA: Project[] = [
   {
     id: 1,
-    title: "4C Construction Web",
+    title: "4Ceria (4C) - Construction Tech / PropTech Platform",
     category: "Construction & Bidding Platform",
     year: "2026",
     num: "01",
     status: "Development",
-    description: "All-in-one platform for property listing, professional hiring, and construction project bidding.",
-    techStack: ["React", "Laravel (PHP)", "MySQL", "TypeScript"],
+    description: "Centralized web app integrating property marketplaces, professional recruitment, and construction tender bidding across 3 user roles.",
+    techStack: ["Laravel 13", "React 19", "TypeScript", "Tailwind CSS", "Sanctum RBAC", "Redis", "FrankenPHP"],
     images: [
       "/imgOrIcon/4CProject/4CProject_content1.avif",
       "/imgOrIcon/4CProject/4CProject_content2.avif",
@@ -19,27 +19,27 @@ export const PROJECTS_DATA: Project[] = [
     linkGithub: "https://github.com/davinakmalyasha/4Ceria-4C-",
     linkDemo: "https://github.com/davinakmalyasha/4Ceria-4C-",
     role: "Lead Fullstack Developer",
-    overview: "4C Construction Web is a comprehensive web-based platform built to streamline property transactions and construction bidding processes. It enables property owners to list their properties, hiring managers to connect with professionals, and contractors to submit competitive bids for construction projects.",
+    overview: "Engineered a centralized web application integrating property marketplaces, professional recruitment (architects & contractors), and construction tender bidding across 3 distinct user roles, with modular RESTful APIs supporting cross-platform mobile synchronization (Android adaptation final project).",
     challenges: [
-      "Managing complex bidding state transitions and concurrently active auctions in real-time.",
-      "Ensuring secure data flow between buyers, contractors, and administrators.",
-      "Responsive card grid and 3D visual preview representations across various viewports."
+      "Integrating property marketplaces, recruitment, and tender bidding into one ecosystem with 3 distinct user roles.",
+      "Eliminating information asymmetry for clients during tender evaluation.",
+      "Supporting cross-platform mobile synchronization, real-time daily progress logging, milestone approvals, and role-based document vaults."
     ],
     solutions: [
-      "Designed a normalized database model and active controller states in Laravel to process bids sequentially.",
-      "Implemented Laravel policies and strict input validation rules to secure user roles and financial bids.",
-      "Engineered fluid CSS Grid layouts with custom media queries and optimized images to load instantly."
+      "Engineered a full-stack ecosystem architecture with Laravel Sanctum RBAC and Redis.",
+      "Implemented a Weighted Scoring Algorithm (60% proposal price / 40% vendor reputation rating) to automate tender evaluation.",
+      "Built modular RESTful APIs with Laravel Sanctum authentication for mobile sync, progress logging, and document vaults."
     ]
   },
   {
     id: 2,
-    title: "DFD AGENCY",
-    category: "Agency Website",
+    title: "DFD Agency — AI Automation & Multi-Tenant SaaS Engine",
+    category: "AI Automation & SaaS",
     year: "2026",
     num: "02",
     status: "Deployed",
-    description: "A professional and modern agency website built to showcase digital services and brand identity.",
-    techStack: ["Next.js", "Express.js", "MySQL", "TypeScript"],
+    description: "Web platform and multi-tenant backend for AI automation workflows with automated client intake, scoping, and delivery.",
+    techStack: ["Golang", "PostgreSQL", "Supabase", "Next.js", "TypeScript", "Tailwind CSS"],
     images: [
       "/imgOrIcon/DFDAgency/dfdagency_content1.avif",
       "/imgOrIcon/DFDAgency/dfdagency_content2.avif",
@@ -47,17 +47,17 @@ export const PROJECTS_DATA: Project[] = [
     ],
     linkGithub: "https://github.com/davinakmalyasha/DFDAgencyWebsite",
     linkDemo: "https://github.com/davinakmalyasha/DFDAgencyWebsite",
-    role: "Creative Frontend Developer",
-    overview: "DFD Agency is a high-end corporate presentation website designed to attract premium clients. With bespoke typography, modern scroll triggers, and dynamic layout structure, it presents the agency's portfolio, core service offerings, and contact channels in an elite, minimal presentation.",
+    role: "Agentic Software Engineer",
+    overview: "Built a web platform and dashboard to streamline client intake, automated project scoping, and digital service delivery for AI automation workflows, backed by a high-performance Golang and PostgreSQL/Supabase multi-tenant infrastructure.",
     challenges: [
-      "Implementing advanced interactive scroll-linked animations while maintaining high performance.",
-      "Achieving search engine optimization and fast first-contentful-paint (FCP) on image-heavy pages.",
-      "Ensuring fully responsive behavior on modern ultrawide screens as well as mobile devices."
+      "Streamlining agency operations: client intake, project scoping, and service delivery.",
+      "Dispatching real-time tasks and automating client communications with operational status updates.",
+      "Scaling multiple client instances under a single codebase with zero overhead."
     ],
     solutions: [
-      "Used GSAP and Framer Motion to handle scroll-bound animations efficiently.",
-      "Integrated Next.js native Image component optimization and server-side static page generation.",
-      "Developed using flexible flexbox and grid layouts, testing extensively across diverse aspect ratios."
+      "Built agency operations and client portal dashboards for intake, scoping, and delivery.",
+      "Integrated backend API endpoints and automated agent bridges (dfd_bridge) for real-time dispatching and communications.",
+      "Engineered Golang + PostgreSQL/Supabase multi-tenant infrastructure with database isolation and instant provisioning."
     ]
   },
   {
@@ -73,7 +73,7 @@ export const PROJECTS_DATA: Project[] = [
       "/imgOrIcon/1769551128774.avif"
     ],
     linkGithub: "https://github.com/davinakmalyasha/Portofolio",
-    linkDemo: "https://github.com/davinakmalyasha/Portofolio",
+    linkDemo: "https://www.portofoliodavin.vercel.app",
     role: "Creative Technologist",
     overview: "The Portofolio Website is a futuristic 3D showcase featuring a monochromatic color palette, glassmorphism, and smooth scroll interpolation. By mounting HTML layouts onto a Three.js canvas using react-three-fiber, it bridges immersive 3D graphics with highly readable, fully accessible textual content.",
     challenges: [
@@ -89,32 +89,27 @@ export const PROJECTS_DATA: Project[] = [
   },
   {
     id: 4,
-    title: "MINDEASE",
-    category: "Mental Health Platform",
-    year: "2025",
+    title: "Stark - Personal Scalable MultiAgents Architecture",
+    category: "Agentic AI Platform",
+    year: "2026",
     num: "04",
     status: "Development",
-    description: "A comprehensive mental health website designed to track wellness and improve cognitive health.",
-    techStack: ["React", "Go (Golang)", "MySQL", "TypeScript"],
-    images: [
-      "/imgOrIcon/1769547129586.avif",
-      "/imgOrIcon/1769547129614.avif",
-      "/imgOrIcon/1769547129625.avif",
-      "/imgOrIcon/1769547129628.avif"
-    ],
-    linkGithub: "https://github.com/davinakmalyasha/MindEase",
-    linkDemo: "https://github.com/davinakmalyasha/MindEase",
-    role: "Frontend UI/UX Developer",
-    overview: "MindEase is an immersive mental wellness application aiming to provide users with tools to log mood shifts, practice mindfulness, and improve overall cognitive health. The project features visually calming aesthetics, smooth animations to alleviate anxiety, and personalized tracker analytics.",
+    description: "Self-hosted agentic platform with multi-workspace isolation, MCP delegation, and real-time voice pipeline.",
+    techStack: ["Python 3.14", "Pydantic-AI", "FastAPI", "SQLite", "JSONL", "MCP", "React 19", "Electron"],
+    images: [],
+    linkGithub: "https://github.com/davinakmalyasha",
+    linkDemo: "https://www.portofoliodavin.vercel.app",
+    role: "AI Systems Architect",
+    overview: "Architected a self-hosted agentic platform featuring strict multi-workspace isolation (Developer, Personal, House, Agency) with Model Context Protocol (MCP), dynamic tool registries, and a low-latency interactive Live Mode voice pipeline.",
     challenges: [
-      "Creating highly smooth, comforting transitions that load instantly without layout shifting.",
-      "Structuring complex local state for weekly mood charts and daily task checklists.",
-      "Ensuring accessible design for users experiencing high stress or visual sensitivity."
+      "Preventing cross-domain tool ambiguity and context leaks across Developer, Personal, House, and Agency workspaces.",
+      "Offloading heavy compute tasks from primary workspace agents without breaking orchestration.",
+      "Enabling hands-free, voice-driven execution and iteration with low latency."
     ],
     solutions: [
-      "Utilized Framer Motion for hardware-accelerated animations and micro-interactions.",
-      "Designed lightweight custom hooks to manage transient mood logs and client-side history.",
-      "Adopted a curated soft monochrome/pastel color scheme with high readability and screen reader compliance."
+      "Built strict multi-workspace isolation architecture for the agentic platform.",
+      "Integrated Model Context Protocol (MCP) and dynamic tool registries with delegation to specialized execution sub-agents.",
+      "Engineered a low-latency interactive Live Mode with streaming STT/TTS engines."
     ]
   }
 ];

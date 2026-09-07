@@ -11,6 +11,7 @@ import SectionWorks from "./SectionWorks";
 import SectionAbout from "./SectionAbout";
 import SectionExperience from "./SectionExperience";
 import SectionGitHub from "./SectionGitHub";
+import SectionCertificates from "./SectionCertificates";
 import SectionContact from "./SectionContact";
 import { Project, Experience } from "../types/portfolio.types";
 
@@ -33,6 +34,7 @@ export default function Canvas3D({ showContent, activeSlide, onExploreProject, o
     { id: "works", component: <SectionWorks onExploreProject={onExploreProject} isNearActive={isNear(2)} /> },
     { id: "experience", component: <SectionExperience onExploreExperience={onExploreExperience} isNearActive={isNear(3)} /> },
     { id: "github", component: <SectionGitHub /> },
+    { id: "certificates", component: <SectionCertificates /> },
     { id: "contact", component: <SectionContact /> },
   ], [showContent, isNear, onExploreProject, onExploreExperience]);
 
