@@ -7,6 +7,10 @@
   --accent-color: #0e0e0e;
   --font-heading: var(--font-syne), sans-serif;
   --font-body: var(--font-outfit), sans-serif;
+  /* Theme-stable ink/paper aliases used by inverted 2D sections.
+     Resolved at computed-value time, so html.dark flips them too. */
+  --p2d-invert-bg: var(--foreground);
+  --p2d-invert-text: var(--background);
 }
 
 /* Force light mode variables as the default even if OS is dark */

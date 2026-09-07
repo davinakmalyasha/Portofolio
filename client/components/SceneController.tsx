@@ -4,13 +4,14 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { Vector3 } from "three";
 import { scrollProgress } from "../hooks/scrollProgress";
 
-// The wildly scattered physical locations of the 6 pods
+// The wildly scattered physical locations of the 7 pods
 export const POD_COORDINATES = [
   new Vector3(0, 0.5, 0),         // Home: Center, floating normally
   new Vector3(4.0, 2.0, -5.5),    // About: Far Right, High up
   new Vector3(-4.5, 3.2, -11.0),  // Works: Far Left, Very High up
   new Vector3(3.8, 3.6, -16.5),   // Experience: Right, High up
-  new Vector3(-4.2, 4.0, -22.0),  // Services: Left, High up
+  new Vector3(-4.2, 4.0, -22.0),  // GitHub: Left, High up
+  new Vector3(-3.6, 4.4, -24.8),  // Certificates: Left, High up
   new Vector3(4.5, 4.4, -27.5),   // Contact: Far Right, High up
 ];
 

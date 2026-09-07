@@ -5,8 +5,21 @@ import Lenis from "lenis";
 import { Project, Experience } from "../types/portfolio.types";
 import { setScrollProgress } from "./scrollProgress";
 
+export const SECTION_IDS = [
+  "home",
+  "about",
+  "works",
+  "experience",
+  "github",
+  "certificates",
+  "contact",
+];
+
+export type ScrollMode = "3d" | "2d";
+
 interface UseLenisScrollReturn {
   activeSlide: number;
+  setActiveSlide: (index: number) => void;
   showContent: boolean;
   setShowContent: (show: boolean) => void;
   scrollToSlide: (index: number) => void;
@@ -14,11 +27,17 @@ interface UseLenisScrollReturn {
 
 export function useLenisScroll(
   selectedProject: Project | null,
-  selectedExperience: Experience | null
+  selectedExperience: Experience | null,
+  mode: ScrollMode
 ): UseLenisScrollReturn {
   const [activeSlide, setActiveSlide] = useState<number>(0);
   const [showContent, setShowContent] = useState<boolean>(false);
   const lenisRef = useRef<Lenis | null>(null);
+  const modeRef = useRef<ScrollMode>(mode);
+
+  useEffect(() => {
+    modeRef.current = mode;
+  }, [mode]);
 
   useEffect(() => {
     if (!showContent) return;
@@ -33,6 +52,10 @@ export function useLenisScroll(
     lenisRef.current = lenis;
 
     const handleScroll = (): void => {
+      // In 2D mode the page flows freely — no slide mapping, active section
+      // is tracked by Portfolio2D via IntersectionObserver.
+      if (modeRef.current !== "3d") return;
+
       const progress = lenis.scroll / window.innerHeight;
       setActiveSlide(Math.round(progress));
       document.documentElement.style.setProperty("--scroll-progress", progress.toFixed(4));
@@ -66,6 +89,14 @@ export function useLenisScroll(
   }, [selectedProject, selectedExperience]);
 
   const scrollToSlide = (index: number): void => {
+    if (modeRef.current === "2d") {
+      const id = SECTION_IDS[index];
+      if (id) {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      return;
+    }
+
     if (lenisRef.current) {
       lenisRef.current.scrollTo(index * window.innerHeight);
     }
@@ -73,6 +104,7 @@ export function useLenisScroll(
 
   return {
     activeSlide,
+    setActiveSlide,
     showContent,
     setShowContent,
     scrollToSlide,
