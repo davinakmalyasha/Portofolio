@@ -3,9 +3,9 @@
 import React from "react";
 
 const STACKS = [
-  { category: "AI & DEEP LEARNING", items: ["Python", "PyTorch", "YOLOv8 / OpenCV", "LangChain / RAG", "OpenAI APIs"] },
-  { category: "FRONTEND & WEB", items: ["React.js", "Next.js", "TypeScript", "Three.js / React Three Fiber", "Framer Motion"] },
-  { category: "BACKEND & INFRA", items: ["Node.js", "Express / FastAPIs", "PostgreSQL", "Docker", "Git / GitHub Actions"] }
+  { category: "AI & AGENTS", items: ["Python", "Pydantic-AI", "LangChain / LangGraph", "MCP", "Hugging Face"] },
+  { category: "FRONTEND & WEB", items: ["React 19", "Next.js", "TypeScript", "Tailwind CSS", "Three.js / R3F"] },
+  { category: "BACKEND & INFRA", items: ["Golang", "Laravel 13", "PostgreSQL / Supabase", "Redis / SQLite", "FastAPI / FrankenPHP"] }
 ];
 
 export default function StackTab(): React.JSX.Element {

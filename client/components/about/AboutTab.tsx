@@ -33,13 +33,13 @@ export default function AboutTab(): React.JSX.Element {
         <span className="focus-label">ACTIVITY LOGS</span>
         <div className="focus-cards-grid activity-logs-grid">
           <div className="focus-card">
+            <span className="focus-card-title">STARK</span>
+          </div>
+          <div className="focus-card">
             <span className="focus-card-title">4C</span>
           </div>
           <div className="focus-card">
-            <span className="focus-card-title">MINDEASE</span>
-          </div>
-          <div className="focus-card">
-            <span className="focus-card-title">PORTFOLIO WEBSITE</span>
+            <span className="focus-card-title">DFD AGENCY</span>
           </div>
           <div className="focus-card more-card">
             <span className="focus-card-title">+1</span>

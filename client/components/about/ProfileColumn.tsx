@@ -41,7 +41,7 @@ export default function ProfileColumn({ isNearActive }: ProfileColumnProps): Rea
         <div className="detail-box">
           <span className="detail-label">GPA</span>
           <span className="detail-value">
-            3.55 <span className="gpa-scale">/ 4.00</span>
+            3.60 <span className="gpa-scale">/ 4.00</span>
           </span>
         </div>
       </div>
