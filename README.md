@@ -1,4 +1,4 @@
-# 🌌 High-Performance Interactive 3D Portfolio — Davin Akmal Yasha
+# High-Performance Interactive 3D Portfolio — Davin Akmal Yasha
 
 <p align="center">
   <img src="https://skillicons.dev/icons?i=nextjs,react,ts,threejs,github,svg" alt="Tech Stack" />
@@ -14,7 +14,7 @@
 
 ---
 
-## 👋 About Me & This Project
+## About Me & This Project
 
 Welcome! This is my personal website and portfolio showcasing my journey as a **Software Engineering Student at Telkom University** (GPA 3.55/4.00) and an **IT Developer** specializing in Full-Stack Development, Software Architecture, and AI Orchestration.
 
@@ -22,7 +22,7 @@ Recently, during my IT Development internship at **PT Len Industri (Persero)**, 
 
 This personal portfolio is designed to be a physical proof-of-concept of advanced web engineering—coupling beautiful, premium WebGL/Three.js visual elements with mathematical and DOM-level micro-optimizations that deliver a flawless, high-speed UX.
 
-## 🚀 Architectural Vision & Tech Stack
+## Architectural Vision & Tech Stack
 
 This project represents a complete, ground-up optimization of interactive portfolio design, transforming heavy WebGL canvases into a lightweight, high-performance digital showcase.
 
