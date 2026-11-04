@@ -111,12 +111,48 @@ const SHARED_CONNECTION_PAIRS = (() => {
 })();
 
 export function useNeuralNetwork(): NeuralNetworkData {
-  const initialPositions = useMemo((): Float32Array => new Float32Array(PARTICLE_COUNT * 3), []);
-  const packetInitialPositions = useMemo((): Float32Array => new Float32Array(PACKET_COUNT * 3), []);
+  // Seed buffers with the scattered constellation pose so pods that are far
+  // away can idle without a per-frame update and still render correctly.
+  const initialPositions = useMemo((): Float32Array => {
+    const positions = new Float32Array(PARTICLE_COUNT * 3);
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const idx = i * 3;
+      positions[idx] = SHARED_BASE_POSITIONS[idx] + SHARED_SCATTER_OFFSETS[idx];
+      positions[idx + 1] = SHARED_BASE_POSITIONS[idx + 1] + SHARED_SCATTER_OFFSETS[idx + 1];
+      positions[idx + 2] = SHARED_BASE_POSITIONS[idx + 2] + SHARED_SCATTER_OFFSETS[idx + 2];
+    }
+    return positions;
+  }, []);
 
   const linePositions = useMemo((): Float32Array => {
-    return new Float32Array(SHARED_CONNECTION_PAIRS.length * 2 * 3);
-  }, []);
+    const positions = new Float32Array(SHARED_CONNECTION_PAIRS.length * 2 * 3);
+    SHARED_CONNECTION_PAIRS.forEach((pair, pairIndex) => {
+      const i = pair[0] * 3;
+      const j = pair[1] * 3;
+      const lineIdx = pairIndex * 6;
+      positions[lineIdx] = initialPositions[i];
+      positions[lineIdx + 1] = initialPositions[i + 1];
+      positions[lineIdx + 2] = initialPositions[i + 2];
+      positions[lineIdx + 3] = initialPositions[j];
+      positions[lineIdx + 4] = initialPositions[j + 1];
+      positions[lineIdx + 5] = initialPositions[j + 2];
+    });
+    return positions;
+  }, [initialPositions]);
+
+  const packetInitialPositions = useMemo((): Float32Array => {
+    const positions = new Float32Array(PACKET_COUNT * 3);
+    if (SHARED_CONNECTION_PAIRS.length === 0) return positions;
+
+    for (let k = 0; k < PACKET_COUNT; k++) {
+      const pair = SHARED_CONNECTION_PAIRS[k % SHARED_CONNECTION_PAIRS.length];
+      const idx = pair[0] * 3;
+      positions[k * 3] = initialPositions[idx];
+      positions[k * 3 + 1] = initialPositions[idx + 1];
+      positions[k * 3 + 2] = initialPositions[idx + 2];
+    }
+    return positions;
+  }, [initialPositions]);
 
   return {
     particleCount: PARTICLE_COUNT,

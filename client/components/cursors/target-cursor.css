@@ -1,0 +1,61 @@
+.target-cursor-root {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  pointer-events: none;
+}
+
+.target-cursor-label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10055;
+  padding: 3px 6px;
+  border: 1px solid var(--foreground);
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: opacity 0.16s ease;
+  will-change: transform;
+}
+
+.target-cursor-label.is-visible {
+  opacity: 1;
+}
+
+/* Hide the native cursor while the custom cursor is active. */
+body.custom-cursor-active,
+body.custom-cursor-active * {
+  cursor: none !important;
+}
+
+body.custom-cursor-active input,
+body.custom-cursor-active textarea,
+body.custom-cursor-active select,
+body.custom-cursor-active [contenteditable="true"] {
+  cursor: text !important;
+}
+
+/* Keep the intro loader clean. */
+.app-wrapper.loading-locked .target-cursor-root,
+.app-wrapper.loading-locked .target-cursor-label,
+.app-wrapper:has(.intro-loader-container) .target-cursor-root,
+.app-wrapper:has(.intro-loader-container) .target-cursor-label {
+  display: none !important;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .target-cursor-root,
+  .target-cursor-label {
+    display: none !important;
+  }
+}

@@ -22,6 +22,10 @@ export default function ProfileColumn({ isNearActive }: ProfileColumnProps): Rea
             transition: "opacity 0.5s ease"
           }}
         />
+        <div className="profile-photo-overlay">
+          <span className="overlay-label">Portrait / 2026</span>
+          <span className="overlay-name">Davin Akmal Yasha</span>
+        </div>
       </div>
 
       {/* University & GPA Row */}

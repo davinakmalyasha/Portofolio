@@ -32,7 +32,7 @@ const SectionGitHub = memo(function SectionGitHub(): React.JSX.Element {
         <ProfilePanel
           profile={data.profile}
           languages={data.languages}
-          totalEstLinesOfCode={data.totalEstLinesOfCode}
+          totalStars={data.totalStars}
         />
         <RepoGrid repos={data.repos} />
       </div>
@@ -43,7 +43,7 @@ const SectionGitHub = memo(function SectionGitHub(): React.JSX.Element {
     <SlideSection3D id="github" index={4}>
       <div className="section-title-wrap">
         <h2>GITHUB STATS</h2>
-        <span>Open Source Telemetry</span>
+        <span>04 / Open Source Telemetry</span>
       </div>
 
       {renderContent()}

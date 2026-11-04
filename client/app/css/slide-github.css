@@ -7,7 +7,6 @@
   max-width: 1100px;
   height: 100%;
   text-align: left;
-  transform-style: preserve-3d;
   margin-top: 50px;
 }
 
@@ -21,8 +20,6 @@
   padding: 24px 20px;
   position: relative;
   border-radius: 4px;
-  transform-style: preserve-3d;
-  transform: translateZ(25px);
   transition: border-color 0.3s ease;
 }
 
@@ -115,6 +112,12 @@
   line-height: 1.1;
 }
 
+.github-stat-value--text {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.4px;
+}
+
 .github-stat-label {
   font-size: 0.52rem;
   font-weight: 800;
@@ -192,8 +195,23 @@
   flex-direction: column;
   gap: 20px;
   width: 100%;
-  transform-style: preserve-3d;
-  transform: translateZ(35px);
+}
+
+.github-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.github-source-note {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.48rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--text-muted);
 }
 
 .github-section-subtitle {
@@ -210,7 +228,6 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   width: 100%;
-  transform-style: preserve-3d;
 }
 
 /* Repository Card Layout */
@@ -225,13 +242,11 @@
   gap: 15px;
   height: 165px;
   position: relative;
-  transform-style: preserve-3d;
-  transform: translateZ(20px);
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s ease;
 }
 
 .github-repo-card:hover {
-  transform: translateZ(40px) translateY(-5px);
+  transform: translateY(-5px);
   border-color: var(--foreground);
 }
 
@@ -373,11 +388,9 @@
   }
 
   .github-profile-panel {
-    transform: translateZ(10px);
   }
 
   .github-repos-section {
-    transform: translateZ(15px);
   }
 
   .github-repos-grid {

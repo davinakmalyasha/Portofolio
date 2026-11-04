@@ -32,6 +32,7 @@ export default function Contact2D(): React.JSX.Element {
           <button
             onClick={handleCopyEmail}
             className="p2d-email-link cursor-target"
+            data-cursor="COPY"
           >
             davinyasa06@gmail.com
           </button>
@@ -49,6 +50,7 @@ export default function Contact2D(): React.JSX.Element {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p2d-network-link cursor-target"
+                  data-cursor="VISIT"
                 >
                   <span>{n.name}</span>
                   <span aria-hidden="true">↗</span>

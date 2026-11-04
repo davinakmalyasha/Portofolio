@@ -18,10 +18,10 @@ export default function ProjectBody({
   return (
     <div className="pm-body-grid">
       <div className="pm-body-col left-col">
-        <h3>PROJECT OVERVIEW</h3>
+        <h3><span className="pm-section-index">01</span> PROJECT OVERVIEW</h3>
         <p className="pm-overview-text">{overview || "No overview provided."}</p>
 
-        <h3>TECHNOLOGY INDEX</h3>
+        <h3><span className="pm-section-index">02</span> TECHNOLOGY INDEX</h3>
         <div className="pm-tech-grid">
           {techStack.map((tech) => (
             <span key={tech} className="pm-tech-badge">
@@ -32,7 +32,7 @@ export default function ProjectBody({
       </div>
 
       <div className="pm-body-col right-col">
-        <h3>CHALLENGES & ARCHITECTURE</h3>
+        <h3><span className="pm-section-index">03</span> CHALLENGES & ARCHITECTURE</h3>
         {challenges.length === 0 ? (
           <p className="pm-muted-text">No challenge logs recorded.</p>
         ) : (

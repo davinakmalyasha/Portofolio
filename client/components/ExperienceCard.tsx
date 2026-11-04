@@ -29,6 +29,7 @@ const ExperienceCard = memo(function ExperienceCard({
   return (
     <motion.div
       className="experience-slide-card cursor-target"
+      data-cursor="VIEW"
       initial={{ opacity: 0, x: 50, y: idx % 2 === 0 ? -15 : 15 }}
       animate={{ opacity: 1, x: 0, y: 0 }}
       transition={{ delay: idx * 0.1, duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
@@ -91,7 +92,12 @@ const ExperienceCard = memo(function ExperienceCard({
             </span>
           )}
         </h3>
-        <p className="experience-category">{experience.category || "Experience"}</p>
+        <div className="experience-meta-line">
+          <p className="experience-category">{experience.category || "Experience"}</p>
+          <span className="status-chip">
+            {experience.date?.toLowerCase().includes("now") ? "Current" : "Completed"}
+          </span>
+        </div>
         {experience.date && (
           <p className="experience-date">{experience.date}</p>
         )}

@@ -30,31 +30,20 @@ export default function ViewModeToggle({ mode, onSwitch, onPrefetch2D, disabled 
 
   return (
     <div className="view-mode-control">
-      <motion.span
-        key={`label-${target}`}
-        className="view-mode-label"
-        data-text={target === "2d" ? "2D MODE>" : "3D MODE>"}
-        aria-hidden="true"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.8 }}
-        transition={{ duration: 0.3, delay: 0.15 }}
-      >
-        {target === "2d" ? "2D MODE>" : "3D MODE>"}
-      </motion.span>
-
       <motion.button
         key={spinKey}
         onClick={handleClick}
         onMouseEnter={handleHover}
         className="view-mode-toggle-btn cursor-target"
-      aria-label={`Switch to ${target === "3d" ? "3D" : "2D"} mode`}
-      title={`Switch to ${target === "3d" ? "3D" : "2D"} mode`}
-      initial={{ rotateY: 0, opacity: 1 }}
-      animate={{ rotateY: 360, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
-      whileHover={{ scale: 1.08 }}
-      whileTap={{ scale: 0.92 }}
-    >
+        data-cursor="SWITCH"
+        aria-label={`Switch to ${target === "3d" ? "3D" : "2D"} mode`}
+        title={`Switch to ${target === "3d" ? "3D" : "2D"} mode`}
+        initial={{ rotateY: 0, opacity: 1 }}
+        animate={{ rotateY: 360, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.25, 1, 0.5, 1] }}
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.92 }}
+      >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={target}

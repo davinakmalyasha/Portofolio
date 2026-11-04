@@ -60,6 +60,11 @@ export default function ProjectDetailModal({
           />
 
           <ProjectCarousel images={project.images} title={project.title} />
+          {project.images.length > 0 && (
+            <span className="pm-figure-caption">
+              FIG. 01 — {project.title} / Product interface
+            </span>
+          )}
 
           <ProjectBody
             overview={project.overview}

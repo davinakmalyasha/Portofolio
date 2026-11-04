@@ -5,6 +5,7 @@ import { Canvas } from "@react-three/fiber";
 import ParticleWave from "./ParticleWave";
 import StarField from "./StarField";
 import SceneController from "./SceneController";
+import SceneAtmosphere from "./SceneAtmosphere";
 import Pod3D from "./Pod3D";
 import SectionHome from "./SectionHome";
 import SectionWorks from "./SectionWorks";
@@ -42,15 +43,15 @@ export default function Canvas3D({ showContent, activeSlide, onExploreProject, o
     <div className="canvas-container" style={{ pointerEvents: "auto", zIndex: 10 }}>
       <Canvas
         camera={{ position: [0, 0, 5], fov: 60 }}
-        gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        gl={{
+          antialias: true,
+          alpha: true,
+          stencil: false,
+          powerPreference: "high-performance",
+        }}
       >
         <Suspense fallback={null}>
-          {/* Advanced Studio Lighting for Glass Refraction & Highlights */}
-          <ambientLight intensity={0.6} />
-          <directionalLight position={[5, 15, 5]} intensity={1.2} />
-          <pointLight position={[-8, 5, 3]} intensity={1.8} color="#00e5ff" /> {/* Cool cyan rim light */}
-          <pointLight position={[8, -5, 4]} intensity={1.5} color="#ff9100" />  {/* Warm amber rim light */}
-
+          <SceneAtmosphere />
           <ParticleWave />
           <StarField />
           <SceneController />

@@ -11,82 +11,6 @@
   gap: 10px;
 }
 
-/* Robotic glitch label showing the target mode */
-.view-mode-label {
-  position: relative;
-  font-family: var(--font-heading);
-  font-size: 0.5rem;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--foreground);
-  opacity: 0.8;
-  white-space: nowrap;
-  user-select: none;
-  animation: modeLabelGlitch 3.2s steps(1) infinite;
-}
-
-/* Ghost double-image slice for the glitch burst */
-.view-mode-label::before {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: var(--foreground);
-  opacity: 0;
-  pointer-events: none;
-}
-
-@keyframes modeLabelGlitch {
-  0%, 86%, 100% {
-    transform: translate(0, 0);
-    opacity: 0.8;
-    clip-path: inset(0 0 0 0);
-  }
-  87% {
-    transform: translate(-2px, 1px) skewX(-10deg);
-    clip-path: inset(8% 0 62% 0);
-  }
-  88% {
-    transform: translate(2px, -1px) skewX(10deg);
-    clip-path: inset(62% 0 8% 0);
-  }
-  89% {
-    transform: translate(-1px, 0) skewX(-6deg);
-    clip-path: inset(30% 0 42% 0);
-    opacity: 1;
-  }
-  90% {
-    transform: translate(0, 1px);
-    clip-path: inset(0 0 82% 0);
-  }
-  91% {
-    transform: translate(1px, -1px);
-    clip-path: inset(70% 0 0 0);
-    opacity: 0.7;
-  }
-  92% {
-    transform: translate(0, 0);
-    clip-path: inset(0 0 0 0);
-    opacity: 0.8;
-  }
-}
-
-/* Ghost slice animation for the pseudo-element */
-@keyframes modeLabelGhost {
-  0%, 86%, 100% { opacity: 0; transform: translate(0, 0); }
-  87% { opacity: 0.55; transform: translate(3px, 0); clip-path: inset(10% 0 55% 0); }
-  88% { opacity: 0.55; transform: translate(-3px, 0); clip-path: inset(55% 0 10% 0); }
-  89% { opacity: 0.4; transform: translate(2px, 1px); clip-path: inset(25% 0 45% 0); }
-  90% { opacity: 0.4; transform: translate(-2px, -1px); clip-path: inset(0 0 75% 0); }
-  91% { opacity: 0.3; transform: translate(1px, 0); clip-path: inset(65% 0 5% 0); }
-  92% { opacity: 0; transform: translate(0, 0); }
-}
-
-.view-mode-label::before {
-  animation: modeLabelGhost 3.2s steps(1) infinite;
-}
-
 .view-mode-toggle-btn {
   position: relative;
   width: 42px;
@@ -1172,12 +1096,72 @@ html.dark .p2d-shimmer {
 
 .p2d-cert-row {
   display: grid;
-  grid-template-columns: 44px 110px 1fr 200px auto;
-  gap: 18px;
+  grid-template-columns: 44px 144px 104px 1fr 200px auto;
+  gap: 16px;
   align-items: center;
   padding: 26px 10px;
   border-bottom: 1px solid var(--border-color);
   transition: background-color 0.3s ease, padding 0.3s ease;
+  cursor: pointer;
+}
+
+.p2d-cert-row:focus-visible {
+  outline: 1px solid var(--foreground);
+  outline-offset: -1px;
+}
+
+.p2d-cert-thumb {
+  width: 104px;
+  height: 76px;
+  border: 1px solid var(--border-color);
+  background-color: var(--card-bg);
+  overflow: hidden;
+}
+
+.p2d-cert-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.p2d-cert-thumb--empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  border-style: dashed;
+  background-color: transparent;
+}
+
+.p2d-cert-thumb--empty .certificate-thumb-mark {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: var(--text-muted);
+  opacity: 0.55;
+}
+
+.p2d-cert-thumb--empty .certificate-thumb-caption {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.38rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+.p2d-cert-row:hover .p2d-cert-thumb img {
+  transform: scale(1.05);
+}
+
+.p2d-cert-link--muted {
+  color: var(--text-muted);
+  border-color: var(--border-color);
+  pointer-events: none;
 }
 
 .p2d-cert-row:hover {
@@ -1194,9 +1178,12 @@ html.dark .p2d-shimmer {
 
 .p2d-cert-tag {
   font-family: var(--font-space-mono), monospace;
-  font-size: 0.56rem;
+  font-size: 0.54rem;
   font-weight: 700;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.2px;
+  line-height: 1.6;
+  text-transform: uppercase;
+  white-space: nowrap;
   color: var(--text-muted);
 }
 
@@ -1484,7 +1471,12 @@ html.dark .p2d-shimmer {
   }
 
   .p2d-cert-row {
-    grid-template-columns: 36px 1fr auto;
+    grid-template-columns: 36px 84px 1fr auto;
+  }
+
+  .p2d-cert-thumb {
+    width: 84px;
+    height: 62px;
   }
 
   .p2d-cert-tag {
@@ -1502,10 +1494,6 @@ html.dark .p2d-shimmer {
 }
 
 @media (max-width: 768px) {
-  .view-mode-label {
-    display: none;
-  }
-
   /* Mode toggle is unmounted on small screens — the hint is meaningless there */
   .p2d-footer-hint {
     display: none;
@@ -1614,9 +1602,14 @@ html.dark .p2d-shimmer {
   }
 
   .p2d-cert-row {
-    grid-template-columns: 28px 1fr auto;
+    grid-template-columns: 28px 72px 1fr auto;
     gap: 10px;
     padding: 22px 6px;
+  }
+
+  .p2d-cert-thumb {
+    width: 72px;
+    height: 54px;
   }
 
   .p2d-cert-title {

@@ -23,11 +23,17 @@ const SectionContact = memo(function SectionContact(): React.JSX.Element {
     <SlideSection3D id="contact" index={4}>
       <div className="contact-slide-layout">
         <div className="contact-left-col">
+          <span className="section-kicker">07 / Contact</span>
           <span className="contact-subtitle">[ LET&apos;S CONNECT ]</span>
+          <div className="contact-status-row">
+            <span className="status-chip">Open to work</span>
+            <span className="status-chip">Jakarta, ID</span>
+          </div>
           <div className="email-click-area">
             <motion.div
               onClick={handleCopyEmail}
               className="contact-mail-link cursor-target"
+              data-cursor="COPY"
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
@@ -66,6 +72,7 @@ const SectionContact = memo(function SectionContact(): React.JSX.Element {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="network-card cursor-target"
+                data-cursor="VISIT"
               >
                 <span className="network-name">{n.name}</span>
                 <span className="network-arrow">↗</span>

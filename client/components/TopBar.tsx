@@ -33,30 +33,40 @@ export default function TopBar({ onNavClick, activeSlide, ready, isMobile, viewM
       animate={ready ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }}
       transition={{ duration: 0.7, ease: [0.25, 1, 0.5, 1], delay: 0.1 }}
     >
-      <div />
+      <button
+        type="button"
+        className="topbar-brand cursor-target"
+        data-cursor="GO"
+        onClick={() => onNavClick(0)}
+        aria-label="Go to home"
+      >
+        DAVIN
+      </button>
 
-      <div className="nav-container">
-        <nav>
-          <ul className="navMenu">
-            {MENU_ITEMS.map((item) => (
-              <li
-                key={item.index}
-                className={`cursor-target ${activeSlide === item.index ? "active" : ""}`}
-                onClick={() => onNavClick(item.index)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    onNavClick(item.index);
-                  }
-                }}
-                tabIndex={0}
-                role="button"
-              >
-                {item.label}
-              </li>
-            ))}
-          </ul>
-        </nav>
+      <nav className="topbar-nav" aria-label="Primary">
+        <ul className="navMenu">
+          {MENU_ITEMS.map((item) => (
+            <li
+              key={item.index}
+              className={`cursor-target ${activeSlide === item.index ? "active" : ""}`}
+              data-cursor="GO"
+              onClick={() => onNavClick(item.index)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  onNavClick(item.index);
+                }
+              }}
+              tabIndex={0}
+              role="button"
+            >
+              {item.label}
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div className="topbar-controls">
         {/* 3D access is disabled on small screens — mode is locked to 2D there */}
         {!isMobile && (
           <ViewModeToggle mode={viewMode} onSwitch={onModeSwitch} onPrefetch2D={onPrefetch2D} />

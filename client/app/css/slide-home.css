@@ -7,13 +7,13 @@
   transform-style: preserve-3d;
 }
 .section-title-wrap h2 {
-  font-size: 1.8rem;
+  font-size: 1.55rem;
   font-weight: 900;
   letter-spacing: -1px;
   transform: translateZ(50px);
 }
 .section-title-wrap span {
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -32,6 +32,12 @@
   letter-spacing: 1px;
   transform: translateZ(50px);
 }
+/* The hero keeps its shallow 3D depth; the other sections are flattened
+   for compositing performance. */
+#home .capsule-content-card {
+  transform-style: preserve-3d;
+}
+
 .home-slide-content {
   display: flex;
   flex-direction: column;

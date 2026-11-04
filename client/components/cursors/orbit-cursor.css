@@ -1,0 +1,49 @@
+.orbit-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.orbit-head {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4.5px;
+  height: 4.5px;
+  margin: -2.25px 0 0 -2.25px;
+  border-radius: 50%;
+  background-color: var(--foreground);
+  box-shadow: 0 0 0 1px var(--background);
+}
+
+.orbit-orb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--foreground);
+}
+
+.orbit-ghost {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2.5px;
+  height: 2.5px;
+  border-radius: 50%;
+  background-color: var(--foreground);
+}
+
+.orbit-pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  margin: -12px 0 0 -12px;
+  border: 1px solid var(--foreground);
+  border-radius: 50%;
+  opacity: 0;
+}

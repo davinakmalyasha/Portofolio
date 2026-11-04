@@ -46,6 +46,7 @@ export default function ThemeToggle(): React.JSX.Element {
     <button
       onClick={toggleTheme}
       className="theme-toggle-btn cursor-target"
+      data-cursor="THEME"
       aria-label="Toggle Theme"
     >
       <span className="theme-icon">
