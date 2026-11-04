@@ -3,7 +3,8 @@
 import React, { useEffect, useState, useCallback, useMemo, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import TopBar from "../components/TopBar";
-import TargetCursor from "../components/TargetCursor";
+import SectionProgressRail from "../components/SectionProgressRail";
+import TargetCursor from "../components/cursors/TargetCursor";
 import IntroLoader from "../components/IntroLoader";
 import ProjectDetailModal from "../components/project-modal/ProjectDetailModal";
 import ExperienceDetailModal from "../components/project-modal/ExperienceDetailModal";
@@ -258,7 +259,7 @@ export default function Home(): React.JSX.Element {
 
       {visualLayer}
 
-      <TargetCursor spinDuration={2} hideDefaultCursor={true} parallaxOn={true} hoverDuration={0.2} />
+      <TargetCursor />
 
       <TopBar
         onNavClick={handleNavClick}
@@ -269,6 +270,8 @@ export default function Home(): React.JSX.Element {
         onModeSwitch={handleModeSwitch}
         onPrefetch2D={handlePrefetch2D}
       />
+
+      <SectionProgressRail activeSlide={activeSlide} viewMode={viewMode} />
 
       {isMobile && viewMode === "3d" && showContent && !selectedProject && !selectedExperience && (
         <div className="mobile-scroll-indicator-control">

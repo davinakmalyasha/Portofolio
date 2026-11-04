@@ -7,10 +7,22 @@ interface RepoGridProps {
   repos: GitHubRepo[];
 }
 
+function formatUpdated(value?: string): string {
+  if (!value) return "UNKNOWN";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "UNKNOWN";
+  return date
+    .toLocaleDateString("en-US", { month: "short", year: "numeric" })
+    .toUpperCase();
+}
+
 export default function RepoGrid({ repos }: RepoGridProps): React.JSX.Element {
   return (
     <div className="github-repos-section">
-      <span className="github-section-subtitle">LATEST OPEN SOURCE WORK</span>
+      <div className="github-section-heading">
+        <span className="github-section-subtitle">LATEST OPEN SOURCE WORK</span>
+        <span className="detail-caption">UPDATED {formatUpdated(repos[0]?.updatedAt)}</span>
+      </div>
       <div className="github-repos-grid">
         {repos.map((repo) => (
           <a
@@ -19,6 +31,7 @@ export default function RepoGrid({ repos }: RepoGridProps): React.JSX.Element {
             target="_blank"
             rel="noopener noreferrer"
             className="github-repo-card cursor-target"
+            data-cursor="VISIT"
           >
             {/* HUD corner highlights */}
             <div className="tech-corner tech-top-left" style={{ top: "6px", left: "6px" }} />
@@ -43,15 +56,9 @@ export default function RepoGrid({ repos }: RepoGridProps): React.JSX.Element {
               <span className="github-repo-lang">
                 {repo.language && (
                   <>
-                    <span 
-                      className="github-lang-dot" 
-                      style={{ 
-                        backgroundColor: 
-                          repo.language === "TypeScript" ? "#3178c6" :
-                          repo.language === "JavaScript" ? "#f1e05a" :
-                          repo.language === "PHP" ? "#4f5d95" :
-                          repo.language === "HTML" ? "#e34c26" : "#858585"
-                      }} 
+                    <span
+                      className="github-lang-dot"
+                      style={{ backgroundColor: "var(--foreground)", opacity: 0.55 }}
                     />
                     <span>{repo.language}</span>
                   </>

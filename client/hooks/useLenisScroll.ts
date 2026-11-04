@@ -56,7 +56,11 @@ export function useLenisScroll(
       // is tracked by Portfolio2D via IntersectionObserver.
       if (modeRef.current !== "3d") return;
 
-      const progress = lenis.scroll / window.innerHeight;
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const progress = Math.max(
+        0,
+        Math.min(SECTION_IDS.length - 1, (lenis.scroll / maxScroll) * (SECTION_IDS.length - 1))
+      );
       setActiveSlide(Math.round(progress));
       document.documentElement.style.setProperty("--scroll-progress", progress.toFixed(4));
       setScrollProgress(progress);
@@ -98,7 +102,11 @@ export function useLenisScroll(
     }
 
     if (lenisRef.current) {
-      lenisRef.current.scrollTo(index * window.innerHeight);
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const clampedIndex = Math.max(0, Math.min(SECTION_IDS.length - 1, index));
+      lenisRef.current.scrollTo(
+        (clampedIndex / (SECTION_IDS.length - 1)) * maxScroll
+      );
     }
   };
 

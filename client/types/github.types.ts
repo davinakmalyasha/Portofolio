@@ -32,5 +32,5 @@ export interface GitHubStatsResponse {
   profile: GitHubProfile;
   repos: GitHubRepo[];
   languages: LanguageStat[];
-  totalEstLinesOfCode: number;
+  totalStars: number;
 }

@@ -5,6 +5,8 @@ import React from "react";
 export default function AboutTab(): React.JSX.Element {
   return (
     <div className="about-tab-content">
+      <span className="section-kicker">01 / Profile</span>
+
       <div className="about-header-group">
         <h2 className="about-title">Software Engineer</h2>
         <h4 className="about-subtitle-text">with a Focus on AI Orchestration</h4>
@@ -16,6 +18,21 @@ export default function AboutTab(): React.JSX.Element {
         <span>AI ORCHESTRATION</span>
         <span className="separator">/</span>
         <span>FULL-STACK DEVELOPMENT</span>
+      </div>
+
+      <div className="about-meta-row">
+        <div className="meta-item">
+          <span className="meta-label">Location</span>
+          <span className="meta-value">Bandung, ID</span>
+        </div>
+        <div className="meta-item">
+          <span className="meta-label">Status</span>
+          <span className="meta-value">Open to work</span>
+        </div>
+        <div className="meta-item">
+          <span className="meta-label">Focus</span>
+          <span className="meta-value">AI orchestration</span>
+        </div>
       </div>
 
       <div className="about-description">
@@ -34,15 +51,19 @@ export default function AboutTab(): React.JSX.Element {
         <div className="focus-cards-grid activity-logs-grid">
           <div className="focus-card">
             <span className="focus-card-title">STARK</span>
+            <span className="focus-card-meta">Agentic desktop · 2026</span>
           </div>
           <div className="focus-card">
             <span className="focus-card-title">4C</span>
+            <span className="focus-card-meta">Construction ecosystem · 2026</span>
           </div>
           <div className="focus-card">
-            <span className="focus-card-title">DFD AGENCY</span>
+            <span className="focus-card-title">MINDEASE</span>
+            <span className="focus-card-meta">Health platform · 2026</span>
           </div>
           <div className="focus-card more-card">
-            <span className="focus-card-title">+1</span>
+            <span className="focus-card-title">+7</span>
+            <span className="focus-card-meta">More selected work</span>
           </div>
         </div>
       </div>

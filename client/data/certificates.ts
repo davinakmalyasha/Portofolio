@@ -3,29 +3,47 @@ import { Certificate } from "../types/portfolio.types";
 export const CERTIFICATES_DATA: Certificate[] = [
   {
     id: 1,
-    title: "IBM AI Engineering Professional Certificate",
-    issuer: "IBM",
-    year: "May 2026 - July 2026",
-    category: "AI",
-    description: "Deep Learning Systems (PyTorch, TensorFlow, Keras) and end-to-end RAG pipelines with autonomous agent workflows (LangChain, Hugging Face).",
-    credentialUrl: "#",
+    title: "IBM AI Engineering",
+    issuer: "IBM · Coursera",
+    year: "Jul 2026",
+    category: "AI · 13 Courses",
+    description:
+      "Professional certificate covering supervised and unsupervised learning in Python, deep learning with Keras, PyTorch and TensorFlow, transfer learning, and instruction tuning for GPT, LLaMA and BERT. Capstone: a retrieval-augmented generation application built with LangChain.",
+    credentialUrl: "https://www.coursera.org/verify/professional-cert/1FGSGAKYL0E4",
+    image: "/imgOrIcon/certificates/ibm-ai-engineering.png"
   },
   {
     id: 2,
-    title: "Google AI Professional Certificate",
-    issuer: "Google",
-    year: "July 2026",
-    category: "AI",
-    description: "Enterprise generative AI workflows, LLM data synthesis and rapid prototyping, human-in-the-loop pipelines with safety and ethics guidelines.",
-    credentialUrl: "#",
+    title: "IBM RAG and Agentic AI",
+    issuer: "IBM · Coursera",
+    year: "Jul 2026",
+    category: "AI · 10 Courses",
+    description:
+      "Professional certificate on generative AI applications built with retrieval-augmented generation and agentic design: prompt engineering and function calling with LangChain, plus multi-agent systems built with CrewAI and LangGraph, including MCP and multi-agentic cognitive pipelines.",
+    credentialUrl: "https://www.coursera.org/verify/professional-cert/M8MTB4M2G",
+    image: "/imgOrIcon/certificates/ibm-rag-agentic-ai.png"
   },
   {
     id: 3,
-    title: "EPRT | 513/700",
-    issuer: "Telkom University",
-    year: "January 2026",
-    category: "Language",
-    description: "Telkom University English Proficiency Test score 513: professional working proficiency in technical communication, academic writing, and listening comprehension.",
-    credentialUrl: "#",
+    title: "AI Agent Developer",
+    issuer: "Vanderbilt University · Coursera",
+    year: "Jul 2026",
+    category: "AI · 6 Courses",
+    description:
+      "Specialization on designing, building and deploying tool-using AI agents in Python: agent architecture, memory systems, custom GPT development, prompt engineering and trustworthy AI practices for production-grade agent workflows.",
+    credentialUrl: "https://www.coursera.org/verify/specialization/DBQTE84W8T7Y4",
+    image: "/imgOrIcon/certificates/vanderbilt-ai-agent-developer.png"
   },
+  {
+    id: 4,
+    title: "EPRT | 513 / 700",
+    issuer: "Telkom University",
+    year: "Jan 2026",
+    category: "Language",
+    credentialId: "No. 1585/SPI3-A/BHS/2026",
+    validUntil: "Valid until Jan 2028",
+    description:
+      "Telkom University English Proficiency Test score 513: professional working proficiency in technical communication, academic writing and listening comprehension. Listening 52, grammar 53, reading 49.",
+    image: "/imgOrIcon/certificates/eprt-telkom.png"
+  }
 ];

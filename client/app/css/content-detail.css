@@ -1,0 +1,126 @@
+/* Shared content-detail primitives for the 3D pods */
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.section-kicker::before {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background-color: var(--border-color);
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  align-items: flex-start;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.meta-label {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.meta-value {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: var(--foreground);
+}
+
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 6px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.status-chip::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--foreground);
+}
+
+.detail-caption {
+  display: block;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.detail-divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--border-color);
+  opacity: 0.8;
+}
+
+/* Neutral placeholder figure used when a project has no screenshot yet */
+.ph-figure {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: var(--foreground);
+  background-image:
+    linear-gradient(var(--border-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+  background-size: 25% 25%;
+  background-position: center;
+  opacity: 0.9;
+}
+
+.ph-figure-mark {
+  font-family: var(--font-heading), system-ui, sans-serif;
+  font-size: 1.7rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  line-height: 1;
+  opacity: 0.75;
+}
+
+.ph-figure-caption {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.45rem;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  opacity: 0.45;
+}
+

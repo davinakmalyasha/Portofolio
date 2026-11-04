@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import { Group, MathUtils } from "three";
@@ -17,7 +17,6 @@ interface Pod3DProps extends SlideSection3DProps {
 
 export default function Pod3D({ children, id, index, isActive, isNearActive, activeSlide }: Pod3DProps): React.JSX.Element {
   const isDark = useThemeObserver();
-  const [hasBeenNearActive] = useState<boolean>(true);
 
   const groupRef = useRef<Group>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -49,12 +48,16 @@ export default function Pod3D({ children, id, index, isActive, isNearActive, act
   useFrame((state) => {
     if (!groupRef.current) return;
 
+    const { rotation } = groupRef.current;
+    // Inactive pods settle back to zero and then stop doing per-frame work.
+    if (!isActive && Math.abs(rotation.x) < 0.0001 && Math.abs(rotation.y) < 0.0001) return;
+
     // Apply interactive 3D parallax tilt to both backing box and HTML overlay together
     const targetRotX = isActive ? state.pointer.y * 0.12 : 0;
     const targetRotY = isActive ? state.pointer.x * 0.12 : 0;
 
-    groupRef.current.rotation.x = MathUtils.lerp(groupRef.current.rotation.x, targetRotX, 0.08);
-    groupRef.current.rotation.y = MathUtils.lerp(groupRef.current.rotation.y, targetRotY, 0.08);
+    rotation.x = MathUtils.lerp(rotation.x, targetRotX, 0.08);
+    rotation.y = MathUtils.lerp(rotation.y, targetRotY, 0.08);
   });
 
   const labelText = id.toUpperCase().split("").join(" ");
@@ -65,7 +68,13 @@ export default function Pod3D({ children, id, index, isActive, isNearActive, act
       <group ref={groupRef}>
         {/* Monolithic 3D backing plate with micro-chamfers */}
         {id !== "home" && (
-          <GlassPod3D isActive={isActive} isDark={isDark} index={index} activeSlide={activeSlide} />
+          <GlassPod3D
+            isActive={isActive}
+            isNearActive={isNearActive}
+            isDark={isDark}
+            index={index}
+            activeSlide={activeSlide}
+          />
         )}
 
         {/* Floating 2D HTML Content overlay perfectly aligned in front of WebGL backdrop */}
@@ -95,9 +104,10 @@ export default function Pod3D({ children, id, index, isActive, isNearActive, act
               {/* Minimalist vertical title for closed slide */}
               <div className="capsule-label">{labelText}</div>
 
-              {/* Content body containing slides */}
+              {/* Content body containing slides — only mounted for active ±1 pods.
+                  The portal and closed label stay mounted so the distant view is unchanged. */}
               <div className="capsule-content-card">
-                {hasBeenNearActive ? children : null}
+                {isNearActive ? children : null}
               </div>
             </div>
           </section>

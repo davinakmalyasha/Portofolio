@@ -57,11 +57,18 @@ const SectionExperience = memo(function SectionExperience({
     <SlideSection3D id="experience" index={3}>
       <div className="section-title-wrap">
         <h2>MY EXPERIENCE</h2>
-        <span>Professional Journey</span>
+        <span>03 / Professional Journey</span>
+      </div>
+
+      <div className="experience-summary">
+        <span className="detail-caption">
+          {String(EXPERIENCES_DATA.length).padStart(2, "0")} Roles · 2026
+        </span>
       </div>
 
       <button
         className={`experience-scroll-btn experience-scroll-btn-left cursor-target ${showLeftBtn ? "visible" : ""}`}
+        data-cursor="SCROLL"
         onClick={() => handleScroll("left")}
         aria-label="Scroll left"
         disabled={!showLeftBtn}
@@ -74,6 +81,7 @@ const SectionExperience = memo(function SectionExperience({
 
       <button
         className={`experience-scroll-btn experience-scroll-btn-right cursor-target ${showRightBtn ? "visible" : ""}`}
+        data-cursor="SCROLL"
         onClick={() => handleScroll("right")}
         aria-label="Scroll right"
         disabled={!showRightBtn}

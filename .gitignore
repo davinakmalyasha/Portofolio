@@ -1,0 +1,7 @@
+# Local tooling output
+/.playwright-mcp/
+*.log
+
+# OS noise
+.DS_Store
+Thumbs.db

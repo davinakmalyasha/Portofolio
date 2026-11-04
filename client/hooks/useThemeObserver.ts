@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useSyncExternalStore } from "react";
 
 // ────────────────────────────────────────────────────────────
 // Module-level singleton theme observer.
@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 // Works inside R3F <Canvas> reconciler where React Context can't reach.
 // ────────────────────────────────────────────────────────────
 
-type ThemeListener = (isDark: boolean) => void;
+type ThemeListener = () => void;
 
 let currentIsDark = false;
 const listeners = new Set<ThemeListener>();
@@ -23,7 +23,7 @@ function notifyAll(): void {
   const newValue = readTheme();
   if (newValue === currentIsDark) return;
   currentIsDark = newValue;
-  listeners.forEach((fn) => fn(currentIsDark));
+  listeners.forEach((listener) => listener());
 }
 
 function ensureObserver(): void {
@@ -36,14 +36,11 @@ function ensureObserver(): void {
   });
 }
 
-function subscribe(fn: ThemeListener): () => void {
+function subscribe(listener: ThemeListener): () => void {
   ensureObserver();
-  listeners.add(fn);
-  // Immediately fire with current value so the subscriber is in sync
-  fn(currentIsDark);
+  listeners.add(listener);
   return () => {
-    listeners.delete(fn);
-    // Tear down the observer when no subscribers remain
+    listeners.delete(listener);
     if (listeners.size === 0 && observer) {
       observer.disconnect();
       observer = null;
@@ -51,16 +48,19 @@ function subscribe(fn: ThemeListener): () => void {
   };
 }
 
+function getSnapshot(): boolean {
+  return readTheme();
+}
+
+function getServerSnapshot(): boolean {
+  return false;
+}
+
 /**
  * React hook that returns the current `isDark` value.
- * All calls share a single MutationObserver under the hood.
+ * Backed by useSyncExternalStore so all calls share one MutationObserver
+ * and stay consistent with concurrent rendering.
  */
 export function useThemeObserver(): boolean {
-  const [isDark, setIsDark] = useState<boolean>(readTheme);
-
-  useEffect(() => {
-    return subscribe(setIsDark);
-  }, []);
-
-  return isDark;
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }

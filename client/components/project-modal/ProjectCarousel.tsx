@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import PlaceholderSvg from "./PlaceholderSvg";
+import PlaceholderFigure from "./PlaceholderFigure";
+import { getInitials } from "../../utils/initials";
 
 interface ProjectCarouselProps {
   images: string[];
@@ -27,6 +28,7 @@ export default function ProjectCarousel({ images, title }: ProjectCarouselProps)
   }
 
   const allFailed = images.every((_, idx) => imgErrors[idx]);
+  const initials = getInitials(title);
   const handleNext = (): void => { if (!allFailed) setIndex((prev) => (prev + 1) % images.length); };
   const handlePrev = (): void => { if (!allFailed) setIndex((prev) => (prev - 1 + images.length) % images.length); };
   const showControls = images.length > 1 && !allFailed;
@@ -60,7 +62,7 @@ export default function ProjectCarousel({ images, title }: ProjectCarouselProps)
         <AnimatePresence mode="wait">
           {allFailed ? (
             <motion.div key="static-placeholder" className="pm-carousel-image" style={centerStyle} {...slideProps} drag={false}>
-              <PlaceholderSvg />
+              <PlaceholderFigure label={initials} caption="PREVIEW PENDING" />
             </motion.div>
           ) : !imgErrors[index] ? (
             <motion.img
@@ -73,7 +75,7 @@ export default function ProjectCarousel({ images, title }: ProjectCarouselProps)
             />
           ) : (
             <motion.div key={`placeholder-${index}`} className="pm-carousel-image" style={centerStyle} {...slideProps}>
-              <PlaceholderSvg />
+              <PlaceholderFigure label={initials} caption={`SLIDE ${String(index + 1).padStart(2, "0")} UNAVAILABLE`} />
             </motion.div>
           )}
         </AnimatePresence>

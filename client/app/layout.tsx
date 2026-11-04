@@ -1,5 +1,7 @@
 import React from "react";
+import type { Metadata } from "next";
 import { Syne, Outfit, Instrument_Serif, Space_Mono } from "next/font/google";
+import { SITE_NAME, SITE_URL } from "../constants/site";
 import "./globals.css";
 
 const syne = Syne({
@@ -29,13 +31,19 @@ const spaceMono = Space_Mono({
   display: "swap",
 });
 
-export const metadata = {
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Davin | Portfolio",
   description: "Futuristic Monochrome 3D Helix Portfolio Landing Page",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Davin | Portfolio",
     description: "Futuristic Monochrome 3D Helix Portfolio Landing Page",
     type: "website",
+    url: "/",
+    siteName: SITE_NAME,
   },
   twitter: {
     card: "summary_large_image",

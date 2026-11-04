@@ -6,7 +6,7 @@ import { Points, LineSegments, Vector3, MathUtils, PointsMaterial, LineBasicMate
 import { GlassPod3DProps } from "../types/portfolio.types";
 import { useNeuralNetwork } from "../hooks/useNeuralNetwork";
 
-export default function GlassPod3D({ isActive, isDark, index, activeSlide }: GlassPod3DProps): React.JSX.Element {
+export default function GlassPod3D({ isActive, isNearActive, isDark, index, activeSlide }: GlassPod3DProps): React.JSX.Element {
   const pointsRef = useRef<Points>(null);
   const linesRef = useRef<LineSegments>(null);
   const packetPointsRef = useRef<Points>(null);
@@ -24,6 +24,7 @@ export default function GlassPod3D({ isActive, isDark, index, activeSlide }: Gla
 
   const progressRef = useRef<number>(isActive ? 1.0 : 0.0);
   const cachedScaleRef = useRef<Vector3>(new Vector3());
+  const geometryAccumulatorRef = useRef<number>(0);
 
   // Pre-compute per-particle driftSpeed constants once (avoids 36,000 redundant calcs/sec)
   const driftSpeeds = useMemo((): Float32Array => {
@@ -59,7 +60,17 @@ export default function GlassPod3D({ isActive, isDark, index, activeSlide }: Gla
     if (!pointsRef.current) return;
 
     const t = state.clock.getElapsedTime();
-    const clampedDelta = Math.min(0.03, frameDelta);
+
+    // Active pods rebuild every frame; adjacent pods run at 30fps and far pods
+    // at 10fps. They are tiny and fogged out at distance, so this is invisible.
+    const geometryInterval = isActive ? 0 : isNearActive ? 1 / 30 : 0.1;
+    geometryAccumulatorRef.current += frameDelta;
+    const updateGeometry =
+      geometryInterval === 0 || geometryAccumulatorRef.current >= geometryInterval;
+    const geometryDelta = Math.min(0.12, geometryAccumulatorRef.current);
+    if (updateGeometry) {
+      geometryAccumulatorRef.current = 0;
+    }
 
     // Smoothly lerp transition progress (1.0 = active/capsule shape, 0.0 = inactive/scattered constellation)
     progressRef.current = MathUtils.lerp(
@@ -110,6 +121,8 @@ export default function GlassPod3D({ isActive, isDark, index, activeSlide }: Gla
         );
       }
     }
+
+    if (!updateGeometry) return;
 
     // Update particle positions buffer attribute inside WebGL pipeline
     const geom = pointsRef.current.geometry as BufferGeometry;
@@ -173,7 +186,7 @@ export default function GlassPod3D({ isActive, isDark, index, activeSlide }: Gla
 
       for (let k = 0; k < packetCount; k++) {
         const packet = packetsRef.current[k];
-        packet.progress += clampedDelta * packet.speed;
+        packet.progress += geometryDelta * packet.speed;
         if (packet.progress >= 1.0) {
           packet.progress = 0.0;
           packet.connectionIndex = Math.floor(Math.random() * connectionPairs.length);

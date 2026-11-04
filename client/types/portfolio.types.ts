@@ -45,6 +45,9 @@ export interface Certificate {
   description: string;
   category?: string;
   credentialUrl?: string;
+  image?: string;
+  credentialId?: string;
+  validUntil?: string;
 }
 
 export interface SlideSection3DProps {
@@ -69,6 +72,7 @@ export interface CameraTransform {
 
 export interface GlassPod3DProps {
   isActive: boolean;
+  isNearActive: boolean;
   isDark: boolean;
   index: number;
   activeSlide: number;

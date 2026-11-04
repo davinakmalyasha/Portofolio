@@ -5,39 +5,46 @@
   width: 100%;
   max-width: 1100px;
   text-align: left;
-  transform-style: preserve-3d;
 }
 
 .contact-left-col {
-  transform-style: preserve-3d;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.contact-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
 }
 
 .contact-right-col {
-  transform-style: preserve-3d;
 }
 
 .contact-subtitle {
-  font-size: 0.75rem;
+  display: block;
+  margin-top: 8px;
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 3px;
+  letter-spacing: 2.5px;
   color: var(--text-muted);
   display: inline-block;
-  transform: translateZ(30px);
 }
 
 .contact-mail-link {
-  font-size: clamp(1.8rem, 4.5vw, 3rem);
+  font-size: clamp(1.5rem, 3.4vw, 2.35rem);
   font-weight: 900;
   display: block;
   width: max-content;
   white-space: nowrap;
-  letter-spacing: -2px;
-  padding: 16px 32px;
-  margin: -1px 0 -6px -32px;
+  letter-spacing: -1.2px;
+  padding: 10px 24px;
+  margin: -1px 0 -6px -24px;
   line-height: 1.1;
   text-decoration: none;
   color: var(--foreground);
-  transform: translateZ(5px);
   filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.1));
   cursor: pointer;
 }
@@ -45,8 +52,6 @@
 .socials-list {
   display: flex;
   gap: 25px;
-  transform-style: preserve-3d;
-  transform: translateZ(40px);
 }
 
 .social-link {
@@ -56,7 +61,6 @@
   text-decoration: none;
   color: var(--foreground);
   display: inline-block;
-  transform: translateZ(10px);
 }
 
 .btn-reset {
@@ -75,8 +79,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-top: 25px;
-  margin-bottom: 20px;
+  margin-top: 14px;
+  margin-bottom: 10px;
 }
 
 .copy-status-indicator {
@@ -85,7 +89,6 @@
   font-size: 0.65rem;
   letter-spacing: 2px;
   font-weight: 800;
-  transform: translateZ(30px);
 }
 
 .click-to-copy-text {
@@ -101,10 +104,9 @@
 .local-time-card {
   background: var(--card-bg);
   border: 1px solid var(--border-color);
-  padding: 24px;
+  padding: 20px;
   border-radius: 12px;
   margin: 15px 0;
-  transform: translateZ(50px);
   /* backdrop-filter removed: card has opaque bg, blur was invisible but GPU-expensive */
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
 }
@@ -126,7 +128,7 @@
 }
 
 .time-display {
-  font-size: 2.25rem;
+  font-size: 1.8rem;
   font-weight: 900;
   letter-spacing: 1px;
   color: var(--foreground);
@@ -161,7 +163,6 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
   margin-top: 15px;
-  transform: translateZ(40px);
 }
 
 .network-card {
@@ -185,7 +186,7 @@
   background: var(--foreground);
   color: var(--background);
   border-color: var(--foreground);
-  transform: translateY(-3px) translateZ(10px);
+  transform: translateY(-3px) ;
 }
 
 .network-card:hover span {
@@ -207,7 +208,7 @@
 }
 
 .global-time-display {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 500;
   color: var(--text-muted);
   margin-left: 10px;

@@ -24,9 +24,11 @@ export default function ProjectHeader({
   return (
     <div className="pm-header">
       <div className="pm-title-section">
+        <span className="pm-kicker">Case Study / Selected Work</span>
         <h1>{title}</h1>
         <div style={{ display: "flex", gap: "10px", alignItems: "center", marginTop: "8px", flexWrap: "wrap" }}>
           {category && <span className="pm-category-label">{category}</span>}
+          {status && <span className="status-chip">{status}</span>}
         </div>
       </div>
 
@@ -39,6 +41,10 @@ export default function ProjectHeader({
           <div className="pm-meta-box">
             <span className="pm-meta-lbl">TIMELINE</span>
             <span className="pm-meta-val">{year || "2024"}</span>
+          </div>
+          <div className="pm-meta-box">
+            <span className="pm-meta-lbl">STATUS</span>
+            <span className="pm-meta-val">{status || "Shipped"}</span>
           </div>
         </div>
 

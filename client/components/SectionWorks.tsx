@@ -54,11 +54,18 @@ const SectionWorks = memo(function SectionWorks({ onExploreProject, isNearActive
     <SlideSection3D id="works" index={2}>
       <div className="section-title-wrap">
         <h2>MY PROJECT</h2>
-        <span>Creative Showcases</span>
+        <span>02 / Creative Showcases</span>
+      </div>
+
+      <div className="works-summary">
+        <span className="detail-caption">
+          {String(PROJECTS_DATA.length).padStart(2, "0")} Projects · 2025—2026
+        </span>
       </div>
 
       <button
         className={`works-scroll-btn works-scroll-btn-left cursor-target ${showLeftBtn ? "visible" : ""}`}
+        data-cursor="SCROLL"
         onClick={() => handleScroll("left")}
         aria-label="Scroll left"
         disabled={!showLeftBtn}
@@ -71,6 +78,7 @@ const SectionWorks = memo(function SectionWorks({ onExploreProject, isNearActive
 
       <button
         className={`works-scroll-btn works-scroll-btn-right cursor-target ${showRightBtn ? "visible" : ""}`}
+        data-cursor="SCROLL"
         onClick={() => handleScroll("right")}
         aria-label="Scroll right"
         disabled={!showRightBtn}

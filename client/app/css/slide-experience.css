@@ -13,7 +13,6 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  transform-style: preserve-3d !important;
 }
 
 /* Styled horizontal scrollbar */
@@ -35,7 +34,6 @@
   align-items: center;
   justify-content: flex-start;
   min-width: max-content;
-  transform-style: preserve-3d;
 }
 
 .experience-slide-card {
@@ -50,15 +48,13 @@
   justify-content: space-between;
   border-radius: 12px;
   /* backdrop-filter removed: cards have opaque bg, blur was invisible but GPU-expensive */
-  transform: translateZ(40px);
-  transform-style: preserve-3d;
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s;
   cursor: pointer;
   pointer-events: auto;
 }
 
 .experience-slide-card:hover {
-  transform: translateZ(60px) translateY(-8px) scale(1.01);
+  transform: translateY(-8px) scale(1.01);
   border-color: var(--foreground);
 }
 
@@ -68,8 +64,6 @@
   font-size: 0.8rem;
   color: var(--text-muted);
   font-family: var(--font-heading);
-  transform-style: preserve-3d;
-  transform: translateZ(20px);
 }
 
 .experience-number {
@@ -87,29 +81,31 @@
   border-radius: 6px;
   margin: 10px 0;
   border: 1px solid var(--border-color);
-  transform: translateZ(30px);
 }
 
 .experience-card-body {
-  transform-style: preserve-3d;
-  transform: translateZ(35px);
 }
 
 .experience-card-body h3 {
-  font-size: 1.25rem;
+  font-size: 1.12rem;
   font-weight: 800;
   letter-spacing: -0.5px;
   margin-bottom: 3px;
-  transform: translateZ(20px);
+}
+
+.experience-meta-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
 }
 
 .experience-category {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--text-muted);
   font-weight: 700;
   text-transform: uppercase;
   margin-bottom: 5px;
-  transform: translateZ(10px);
 }
 
 .experience-date {
@@ -118,15 +114,13 @@
   opacity: 0.85;
   margin-bottom: 8px;
   font-weight: 500;
-  transform: translateZ(12px);
 }
 
 .experience-details {
-  font-size: 0.8rem;
+  font-size: 0.77rem;
   line-height: 1.4;
   color: var(--text-muted);
   margin-bottom: 10px;
-  transform: translateZ(15px);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -137,13 +131,9 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  transform-style: preserve-3d;
-  transform: translateZ(25px);
 }
 
 .experience-card-footer {
-  transform-style: preserve-3d;
-  transform: translateZ(40px);
 }
 
 .experience-explore-link {
@@ -153,7 +143,18 @@
   text-decoration: none;
   color: var(--foreground);
   display: inline-block;
-  transform: translateZ(10px);
+}
+
+.experience-summary {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  pointer-events: none;
 }
 
 /* Glassmorphic floating scroll navigation buttons */
@@ -172,8 +173,6 @@
   background-color: var(--card-bg);
   border: 1.5px solid var(--border-color);
   color: var(--foreground);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s, border-color 0.3s;

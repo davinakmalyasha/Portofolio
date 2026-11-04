@@ -51,9 +51,9 @@ export default function GitHub2D(): React.JSX.Element {
               <span className="p2d-ledger-v">{data.profile.followers}</span>
             </div>
             <div className="p2d-ledger-row">
-              <span className="p2d-ledger-k">EST. LINES</span>
+              <span className="p2d-ledger-k">STARS</span>
               <span className="p2d-ledger-dots" />
-              <span className="p2d-ledger-v">{data.totalEstLinesOfCode.toLocaleString()}</span>
+              <span className="p2d-ledger-v">{data.totalStars}</span>
             </div>
           </div>
 
@@ -82,6 +82,7 @@ export default function GitHub2D(): React.JSX.Element {
               target="_blank"
               rel="noopener noreferrer"
               className="p2d-repo-row cursor-target"
+              data-cursor="VISIT"
             >
               <span className="p2d-repo-index">{String(i + 1).padStart(2, "0")}</span>
               <div className="p2d-repo-body">

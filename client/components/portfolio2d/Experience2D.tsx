@@ -56,6 +56,7 @@ export default function Experience2D({ onExploreExperience }: Experience2DProps)
               <button
                 onClick={() => onExploreExperience(exp)}
                 className="p2d-explore-link cursor-target"
+                data-cursor="VIEW"
               >
                 VIEW DETAILS <span aria-hidden="true">↗</span>
               </button>

@@ -5,7 +5,6 @@
   width: 100%;
   height: 100%;
   text-align: left;
-  transform-style: preserve-3d;
 }
 
 /* Left Side Column: Profile & Mindsets */
@@ -13,8 +12,6 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-  transform-style: preserve-3d;
-  transform: translateZ(25px);
 }
 
 .profile-photo-container {
@@ -191,8 +188,6 @@
   height: 100%;
   justify-content: flex-start;
   gap: 20px;
-  transform-style: preserve-3d;
-  transform: translateZ(35px);
 }
 
 .about-subnav-row {
@@ -257,7 +252,16 @@
 .about-tab-content {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
+}
+
+.about-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  padding: 8px 0;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .about-header-group {
@@ -267,16 +271,16 @@
 }
 
 .about-title {
-  font-size: 2.1rem;
+  font-size: 1.6rem;
   font-weight: 900;
-  letter-spacing: -1.2px;
+  letter-spacing: -0.5px;
   text-transform: uppercase;
   line-height: 1;
   color: var(--foreground);
 }
 
 .about-subtitle-text {
-  font-size: 1.05rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: var(--text-muted);
   letter-spacing: -0.4px;
@@ -284,9 +288,9 @@
 
 .about-tags-row {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: center;
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   font-weight: 800;
   color: var(--text-muted);
   letter-spacing: 1px;
@@ -299,9 +303,9 @@
 .about-description {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  font-size: 0.85rem;
-  line-height: 1.5;
+  gap: 8px;
+  font-size: 0.82rem;
+  line-height: 1.6;
   color: var(--text-muted);
 }
 
@@ -335,12 +339,14 @@
 
 .focus-card {
   border: 1.5px solid var(--border-color);
-  padding: 12px;
+  padding: 9px 8px;
+  flex-direction: column;
+  gap: 0;
   background-color: var(--background);
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
+  min-height: 56px;
   text-align: center;
   border-radius: 4px;
   transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
@@ -363,8 +369,24 @@
   border-color: var(--foreground);
 }
 
+.focus-card:hover .focus-card-meta {
+  color: var(--background);
+  opacity: 0.72;
+}
+
+.focus-card-meta {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--font-space-mono), monospace;
+  font-size: 0.48rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
 .focus-card-title {
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 900;
   letter-spacing: 0.5px;
   text-transform: uppercase;

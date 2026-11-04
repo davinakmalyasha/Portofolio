@@ -22,7 +22,7 @@ export default function StarField(): React.JSX.Element {
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
-  const count = 500;
+  const count = 700;
   const { positions, sizes, phases, speeds } = useMemo(() => {
     // Pure stateless hash function for deterministic random-like values (no mutations/closure reassignment)
     const random = (idx: number, offset: number): number => {
@@ -43,7 +43,7 @@ export default function StarField(): React.JSX.Element {
 
       pos[i * 3] = x;
       pos[i * 3 + 1] = minY + random(i, 2) * (11.8 - minY);
-      pos[i * 3 + 2] = -16 - random(i, 3) * 10;
+      pos[i * 3 + 2] = -16 - random(i, 3) * 32;
 
       sz[i] = 0.12 + random(i, 4) * 0.35;
       ph[i] = random(i, 5) * Math.PI * 2;
